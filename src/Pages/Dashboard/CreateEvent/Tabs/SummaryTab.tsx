@@ -1,21 +1,43 @@
-import { Button, TextField, Typography } from '@mui/material'
+import { IconButton, InputAdornment, TextField, Typography } from '@mui/material'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 interface ISummaryTab {
-  eventURL: string
+  eventUrl: string
 }
 
-export const SummaryTab = (props: ISummaryTab) => {
-  const { eventURL } = props;
+const SummaryTab = (props: ISummaryTab) => {
+  const { eventUrl } = props;
+
   return (
     <>
       <Typography variant="h2">
         You're all set!
       </Typography>
-      <Typography variant="h4">
+      <Typography variant="h5">
         Let's start spreading the word!
       </Typography>
-      <TextField label="Url" variant="standard" value={eventURL} disabled />
+      <TextField
+        variant="outlined"
+        value={eventUrl}
+        disabled
+        fullWidth
+        multiline
+        rows={2}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={async () => {
+                await navigator.clipboard.writeText(eventUrl);
+              }}>
+                <ContentCopyIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
       {/* <Button onClick={() => onNavigate("/")} variant="contained">To The Event!</Button> */}
     </>
   )
 }
+
+export default SummaryTab;

@@ -1,23 +1,47 @@
-import { createTheme } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
-declare module '@mui/material/styles' {
-  interface Theme {
-    status: {
-      danger: string;
-    };
-  }
-  // allow configuration using `createTheme`
-  interface ThemeOptions {
-    status?: {
-      danger?: string;
-    };
-  }
-}
-
-export const lightTheme = createTheme({
+let lightTheme = createTheme({
   palette: {
+    primary: {
+      main: "#2e2e2e"
+    },
     secondary: {
-      main: "#FFF"
+      main: "#FFFEF9"
     }
+  },
+  typography: {
+    fontFamily: [
+      "Roboto",
+      "sans-serif"
+    ].join(",")
   }
 });
+
+let darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#FFFEF9"
+    },
+    secondary: {
+      main: "#939393"
+    }
+  },
+  typography: {
+    fontFamily: [
+      "Roboto",
+      "sans-serif"
+    ].join(",")
+  }
+})
+
+lightTheme = responsiveFontSizes(lightTheme);
+darkTheme = responsiveFontSizes(darkTheme);
+
+
+const themes = {
+  lightTheme,
+  darkTheme
+}
+
+export default themes

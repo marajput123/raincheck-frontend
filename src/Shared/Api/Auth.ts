@@ -11,7 +11,7 @@ export const signIn = async (signInBody: ISignInRequestBody) => {
     setAuthorizationHeader();
     const response = await axiosInstance
       .post<never, AxiosResponse<IServerResponse<ISignInResponse>>, ISignInRequestBody>(
-        "/public/signin",
+        "/auth/signin",
         signInBody
       );
     return response.data;
@@ -25,7 +25,7 @@ export const signUp = async (signUpBody: ISignUpRquestBody) => {
     setAuthorizationHeader();
     const response = await axiosInstance
       .post<never, AxiosResponse<IServerResponse<IUser>>, ISignUpRquestBody>(
-        "/public/signup",
+        "/auth/signup",
         signUpBody
       );
     return response.data;
@@ -40,7 +40,7 @@ export const signOut = async () => {
     setAuthorizationHeader();
     const response = await axiosInstance
       .post<never, AxiosResponse<IServerResponse<null>>>(
-        "/public/signout",
+        "/auth/signout",
       );
     return response.data;
   } catch (err) {
@@ -53,7 +53,7 @@ export const confirmAccount = async (confirmAccountBody: IConfirmAccountBody) =>
     setAuthorizationHeader();
     const response = await axiosInstance
       .post<never, AxiosResponse<IServerResponse<null>>, IConfirmAccountBody>(
-        "/public/confirmUser",
+        "/auth/confirmUser",
         confirmAccountBody
       );
     return response.data;
@@ -68,7 +68,7 @@ export const verifyToken = async () => {
     console.log(axiosInstance.defaults)
     const response = await axiosInstance
       .post<never, AxiosResponse<IServerResponse<null>>>(
-        "/public/verifyToken",
+        "/auth/verifyToken",
       );
     return response.data;
   } catch (err) {

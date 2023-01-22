@@ -2,7 +2,7 @@ import { LandingPage } from 'src/Pages/LandingPage/LandingPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container, SxProps, ThemeProvider } from '@mui/material';
 import { useEffect, useRef } from 'react';
-import { lightTheme } from 'src/Shared/Theme';
+import Theme from 'src/Shared/Theme';
 import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
 import Progress from './Shared/Components/Progress';
@@ -14,6 +14,7 @@ import { initialAuthCheckAction } from './Shared/Redux/AuthSlice/Actions';
 import { useState } from 'react';
 import { VerifyPage } from './Pages/Verify/VerifyPage';
 import { HomeView } from './Pages/Home/HomeView';
+import { CreateEventForm } from './Pages/Dashboard/CreateEvent';
 
 const containerStyle: SxProps = {
   minWidth: "360px",
@@ -45,7 +46,7 @@ const App = () => {
   }, [auth.initialAuthCheckCompleted])
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={Theme.lightTheme}>
       <Container sx={containerStyle}>
         {!auth.initialAuthCheckCompleted ? <Progress showLoader={showLoader} /> :
           <>
@@ -59,6 +60,7 @@ const App = () => {
                   <Route path="verify" element={<VerifyPage />}></Route>
                 </Route>
                 <Route path="/app" element={<PrivateRoute />}>
+                  <Route path="create" element={<CreateEventForm />}></Route>
                 </Route>
               </Routes>
             </Router>

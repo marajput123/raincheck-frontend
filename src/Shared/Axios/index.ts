@@ -16,6 +16,6 @@ export const setAuthorizationHeader = () => {
   } 
 };
 
-export const axiosInstance =  _axios.create({
+export const axiosInstance = _axios.create({
   baseURL:BASE_URL,
-})
+});

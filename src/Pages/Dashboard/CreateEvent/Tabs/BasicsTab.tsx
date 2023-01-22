@@ -1,115 +1,125 @@
-import { Button, Stack, TextField, Typography } from "@mui/material"
-import { DatePicker, LocalizationProvider, MobileDatePicker, MobileDateTimePicker, MobileTimePicker, TimePicker } from "@mui/x-date-pickers";
+import {
+  Button, Stack, TextField, Typography,
+  FormControl, FormLabel, FormControlLabel,
+  RadioGroup, Radio, InputAdornment, Checkbox
+} from "@mui/material"
+import EventIcon from '@mui/icons-material/Event';
+import { LocalizationProvider, MobileDateTimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { IEvent } from "src/Shared/Models/IEvent";
+import { Controller } from "react-hook-form";
+import { ICreateFormTab } from "src/Pages/Dashboard/CreateEvent";
 
-export interface ICreateEventFormData {
-  name: string;
-  address: string;
-  zip: string;
-  city: string;
-  country: string;
-  description: string;
-  link: string;
-  url: string;
-  date: string;
-}
-
-interface IBasicTab {
-  updateForm: (event: ICreateEventFormData) => void;
-}
-
-
-export const BasicsTab = (props: IBasicTab) => {
-  const {updateForm} = props;
-  const { control, handleSubmit, formState: { errors } } = useForm<ICreateEventFormData>()
-
-  const onSubmit = (data: ICreateEventFormData) => {
-    updateForm(data)
-  }
+const BasicsTab = (props: ICreateFormTab) => {
+  const { control, getValues, setValue, watch, formState: { errors } } = props.form;
 
   return (
     <>
-      <Typography variant="h3">
-        Create Event
+      <Typography variant="h6">
+        Basic Info
       </Typography>
+      <FormLabel id="info-label">Tell us <b>what</b>, <b>when</b>, and <b>where</b> your event will be!</FormLabel>
       <Controller
         name="name"
         defaultValue=""
         control={control}
-        rules={{ required: "Event name is required" }}
+        rules={{ required: "Please enter an event name" }}
         render={({ field }) => (
           <TextField
             {...field}
             label="Event Name"
-            variant="standard"
+            variant="outlined"
             error={!!errors.name?.message}
             helperText={errors.name?.message}
           />
         )}
       />
-      <Stack direction="row" spacing={1}>
+      <Controller
+        name="date"
+        control={control}
+        defaultValue=""
+        rules={{ required: "Please select a time and date" }}
+        render={({ field }) => (
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <MobileDateTimePicker
+              value={field.value}
+              onChange={field.onChange}
+              renderInput={(params) => (
+                <TextField
+                  {...field}
+                  {...params}
+                  label="Date & Time"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.date?.message}
+                  helperText={errors.date?.message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <EventIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              )}
+            />
+          </LocalizationProvider>
+        )}
+      />
+      <FormControl>
+        <FormLabel id="location-label">Location</FormLabel>
+        <RadioGroup
+          row
+          sx={{ display: 'flex', justifyContent: 'space-between' }}
+          aria-labelledby="location-label"
+          name="location"
+          value={watch('location')}
+          onChange={(event: any) => {
+            setValue('location', event.target.value);
+          }}
+        >
+          <FormControlLabel value="address" control={<Radio />} label="Address" />
+          <FormControlLabel value="virtual" control={<Radio />} label="Virtual" />
+          <FormControlLabel value="tba" control={<Radio />} label="TBA" />
+        </RadioGroup>
+      </FormControl>
+      <div hidden={watch('location') !== "address"}>
         <Controller
-          name="date"
+          name="address"
+          defaultValue=""
           control={control}
-          defaultValue={""}
-          rules={{ required: "Please select date." }}
+          rules={{ required: "Please enter event location" }}
           render={({ field }) => (
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <MobileDateTimePicker
-                label="Select Date"
-                value={field.value}
-                onChange={field.onChange}
-                renderInput={(params) => (
-                  <TextField
-                    {...field}
-                    {...params}
-                    variant="standard"
-                    sx={{ width: "100%"}}
-                    error={!!errors.date?.message}
-                    helperText={errors.date?.message}
-                  />
-                )}
-              />
-            </LocalizationProvider>
+            <TextField
+              {...field}
+              label="Address"
+              variant="outlined"
+              fullWidth
+              error={!!errors.address?.message}
+              helperText={errors.address?.message}
+            />
           )}
         />
-      </Stack>
-      <Controller
-        name="link"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Meeting Link"
-            variant="standard"
-          />
-        )}
-      />
-      <Controller
-        name="description"
-        control={control}
-        defaultValue=""
-        rules={{required: "Please enter description for the event."}}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Description"
-            multiline
-            rows={4}
-            variant="standard"
-            error={!!errors.description?.message}
-            helperText={errors.description?.message}
-          />
-        )}
-      />
-      <Stack sx={{ paddingTop: "10px" }} justifyContent="space-between" direction="row">
-        <Button variant="contained">Cancel</Button>
-        <Button variant="contained" onClick={handleSubmit(onSubmit)}>Next</Button>
-      </Stack>
+      </div>
+      <div hidden={watch('location') !== "virtual"}>
+        <Controller
+          name="link"
+          defaultValue=""
+          control={control}
+          rules={{ required: "Please enter a meeting link" }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Meeting Link"
+              variant="outlined"
+              fullWidth
+              error={!!errors.link?.message}
+              helperText={errors.link?.message}
+            />
+          )}
+        />
+      </div>
     </>
   )
 }
+
+export default BasicsTab;
