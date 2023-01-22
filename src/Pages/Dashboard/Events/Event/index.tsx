@@ -48,7 +48,7 @@ export const EventPage = () => {
           </Stack>
           <Stack spacing={2}>
             <Typography>{date}{"      "}{time}</Typography>
-            <CopyTextArea label="http://localhost:3000/app/event/63c4dec5e5f11ef7c1eee5e6" copyText="link"/>
+            <CopyTextArea label="http://localhost:3000/app/events/63c4dec5e5f11ef7c1eee5e6" copyText="link"/>
           </Stack>
           <Stack alignItems="center">
             <Typography sx={{cursor:"pointer", fontSize: ".9rem", color:"#48a1e1"}}>View details</Typography>

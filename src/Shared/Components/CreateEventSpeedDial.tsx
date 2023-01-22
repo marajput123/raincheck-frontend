@@ -36,7 +36,7 @@ export const CreateEventSpeedDial = (props: ICreateEventSpeedDialProps) => {
   const onSpeedDialClick = () => setOpen(!open);
 
   const onCreateEventClick = () => {
-    naviagte("create");
+    naviagte("/app/create");
     setOpen(false);
   }
 

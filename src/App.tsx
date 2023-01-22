@@ -64,13 +64,13 @@ const App = () => {
                   <Route path="sign-up" element={<SignUp />}></Route>
                   <Route path="verify" element={<VerifyPage />}></Route>
                 </Route>
-                <Route path="/app" element={<PrivateRoute />}>
+                <Route path="/app" element={<PrivateRoute><Dashboard/></PrivateRoute>}>
                   <Route path="create" element={<CreateEventForm />}></Route>
                   <Route path="explore" element={<Explore/>}/>
                   <Route path="upcomingEvents" element={<UpcomingEvents/>}/>
                   <Route path="pastEvents" element={<PastEvents/>}/>
                   <Route path="create" element={<CreateEvents/>}/>
-                  <Route path="event/:id" element={<EventPage/>}/>
+                  <Route path="events/:id" element={<EventPage/>}/>
                 </Route>
               </Routes>
             </Router>

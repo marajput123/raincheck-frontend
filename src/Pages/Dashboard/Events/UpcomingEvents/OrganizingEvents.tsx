@@ -14,7 +14,7 @@ export const OrganizingEvents = (props:IAttendingEventsProps) => {
     const navigate = useCustomNavigate()
 
     const onEventCardClick = (e: React.SyntheticEvent, event: IEvent) => {
-        navigate(`/app/event/${event._id}`)
+        navigate(`/app/events/${event._id}`)
     }
 
     // This should be request to get all events that the user is attending
