@@ -1,124 +1,165 @@
-import { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import moment from "moment";
-import { Typography, Stack, Card, Box, Tooltip, IconButton, ClickAwayListener, SxProps } from "@mui/material";
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Typography, Stack, Card, Box, SxProps, CardMedia, CardContent } from "@mui/material";
 import { IEvent } from "../Models/IEvent"
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CircleIcon from '@mui/icons-material/Circle';
+import { faker } from "@faker-js/faker";
+import { AttendeeChip, OrganizerChip } from "./Chips";
+import { styleCardBoxShadow } from "../Contants";
+import { RoleType } from "../Models/IMembership";
+import { randomImage } from "../HelperMethods";
 
 const cardStyle: SxProps = {
-    width: "100%",
-    maxWidth: "800px",
-    minWidth: "320px",
-    minHeight: "250px",
-    maxHeight: "300px",
-    display: "flex",
-    backgroundColor: "#f9f9f9",
-    boxShadow: "none"
+  width: "315px",
+  borderRadius: "10px",
+  boxShadow: styleCardBoxShadow
 }
 
-const eventDescriptionStyle: SxProps = {
-    overflow: "hidden",
-    display: "-webkit-box",
-    WebkitLineClamp: "6",
-    WebkitBoxOrient: "vertical",
-    whiteSpace: "normal"
+const wideCardStyle: SxProps = {
+  width: "100%",
+  maxWidth: "600px",
+  minWidth: "500px",
+  height: "200px",
+  display: "flex",
+  backgroundColor: "white",
+  cursor: "pointer",
+  boxShadow: styleCardBoxShadow
 }
 
 export interface IEventCardProps {
-    event: IEvent
+  event: IEvent
+  onCardClick?: (e: React.SyntheticEvent, event: IEvent) => void;
+}
+
+export const WideEventCard = (props: IEventCardProps) => {
+  const { event } = props;
+
+  // TODO: Developer only
+  const imageUri = event.imageUri || randomImage();
+  const date = useMemo(() => moment(event.date).format('MMM DD, YYYY'), [])
+  const time = useMemo(() => moment(event.date).format('hh:mm A'), [])
+
+  const totalMemberCount = useMemo(() => {
+    let count = 0;
+    event.metadata?.memberCounts.forEach((memberCount) => {
+      count += memberCount.count
+    })
+    return count
+  }, []);
+
+  const organizerUsername = useMemo(() => {
+    if (typeof event.organizers[0] !== "string") {
+      return event.organizers[0].username;
+    }
+    return null
+  }, [])
+
+  const onCardClick = (e: React.SyntheticEvent) => {
+    if (props.onCardClick) {
+      props.onCardClick(e, event);
+    }
+  }
+
+  return (
+    <Card sx={wideCardStyle} onClick={onCardClick}>
+      <CardMedia
+        sx={{ height: "100%", flex: 1 }}
+        image={imageUri}
+        title={event.name}
+      />
+      <Stack sx={{ flex: 1, padding: "10px" }} spacing={3}>
+        <Stack direction="row" justifyContent={"space-between"} alignItems="center">
+          <Stack direction="row" spacing={1} sx={{ cursor: "pointer" }}>
+            {event.metadata?.userMembership?.roleType === RoleType.Attendee ? <AttendeeChip pointer /> : null}
+            {event.metadata?.userMembership?.roleType === RoleType.Organizer ? <OrganizerChip pointer /> : null}
+          </Stack>
+          <Box sx={{ display: "flex", height: "20px", alignItems: "center" }}>
+            <CircleIcon sx={{ fontSize: "10px" }} color="success" />
+            <Typography variant="body2" sx={{ color: "#5E5E5E", paddingLeft: "5px" }}>
+              {totalMemberCount} going
+            </Typography>
+          </Box>
+        </Stack>
+        <Stack>
+          <Typography gutterBottom={false} variant="h4" sx={{ fontWeight: 600, marginBottom: "-10px" }}>{event.name}</Typography>
+          <Typography variant="caption">@{organizerUsername}</Typography>
+        </Stack>
+        <Stack>
+          <Typography variant="body2">{`${date}  ${time}`}</Typography>
+          <Stack direction="row" alignItems={"center"}>
+            <LocationOnIcon sx={{ fontSize: "20px" }} />
+            <Typography sx={{ paddingLeft: "5px" }} variant="body2">{event.location}</Typography>
+          </Stack>
+        </Stack>
+      </Stack>
+    </Card>
+  )
 }
 
 export const EventCard = (props: IEventCardProps) => {
-    const { event } = props;
+  const { event } = props;
 
-    const date = useMemo(() => moment(event.date).format('DD/MM/YYYY'), [])
-    const time = useMemo(() => moment(event.date).format('hh:mm A'), [])
+  // TODO: Developer only
+  const imageUri = event.imageUri || faker.image.food();
 
-    return (
-        <Card sx={cardStyle}>
-            <Stack flex={1} spacing={1} sx={{ margin: "20px 0px 20px 20px" }}>
-                <Typography fontWeight={700} variant="h5" sx={{}}>
-                    {event.name}
-                </Typography>
-                <Typography fontWeight={700} variant="body2">
-                    Description:
-                </Typography>
-                <Typography sx={eventDescriptionStyle} >
-                    {event.description}
-                </Typography>
-            </Stack>
-            <Stack flex={1} spacing={1} sx={{ margin: "20px", overflow: "hidden" }} justifyContent="center">
-                <Box>
-                    <Typography fontWeight={700} variant="body2">
-                        Time:
-                    </Typography>
-                    <Typography>
-                        {time}
-                    </Typography>
-                </Box>
-                <Box>
-                    <Typography fontWeight={700} variant="body2">
-                        Date:
-                    </Typography>
-                    <Typography>
-                        {date}
-                    </Typography>
-                </Box>
-                <Box>
-                    <Typography fontWeight={700} variant="body2">
-                        Address:
-                    </Typography>
-                    <CopyTextArea label={event.location} copyText={event.location} />
-                </Box>
-            </Stack>
-        </Card>
-    )
-}
+  const date = useMemo(() => moment(event.date).format('MMM DD, YYYY'), [])
+  const time = useMemo(() => moment(event.date).format('hh:mm A'), [])
 
+  const totalMemberCount = useMemo(() => {
+    let count = 0;
+    event.metadata?.memberCounts.forEach((memberCount) => {
+      count += memberCount.count
+    })
+    return count
+  }, []);
 
+  const organizerUsername = useMemo(() => {
+    if (typeof event.organizers[0] !== "string") {
+      return event.organizers[0].username;
+    }
+    return null
+  }, [])
 
-const copyBoxStyle: SxProps = {
-    backgroundColor: "#e4dddd",
-    padding: "5px",
-    borderRadius: "5px",
-    display: "flex",
-    alignItems: "center"
-}
-
-const CopyTextArea = (props: { label: string, copyText: string }) => {
-    const { label, copyText } = props;
-    const [open, setOpen] = useState(false);
-
-    const handleTooltipClose = () => {
-        setOpen(false);
-    };
-
-    const handleTooltipOpen = () => {
-        navigator.clipboard.writeText(copyText)
-        setOpen(true);
-    };
-
-    return (
-        <Box sx={copyBoxStyle}>
-            <Typography noWrap sx={{ flex: 1 }}>
-                {label}
+  return (
+    <Card sx={cardStyle}>
+      <CardMedia
+        sx={{ height: "170px" }}
+        image={imageUri}
+        title={event.name}
+      />
+      <CardContent
+        style={{
+          paddingBottom: "10px"
+        }}
+      >
+        <Stack direction="row" justifyContent="space-between" sx={{ paddingBottom: "10px" }}>
+          <Box>
+            <Typography
+              gutterBottom={false}
+              variant="h5"
+              sx={{ fontWeight: 600, marginBottom: "-10px" }}
+            >
+              {event.name}
             </Typography>
-            <ClickAwayListener onClickAway={handleTooltipClose}>
-                <Tooltip
-                    PopperProps={{
-                        disablePortal: true,
-                    }}
-                    onClose={handleTooltipClose}
-                    open={open}
-                    disableFocusListener
-                    disableHoverListener
-                    disableTouchListener
-                    title="Copied!"
-                >
-                    <IconButton onClick={handleTooltipOpen}>
-                        <ContentCopyIcon fontSize="small" />
-                    </IconButton>
-                </Tooltip>
-            </ClickAwayListener>
-        </Box>
-    )
+            <Typography variant="caption">@{organizerUsername}</Typography>
+          </Box>
+          <Box sx={{ display: "flex", height: "20px", alignItems: "center" }}>
+            <CircleIcon sx={{ fontSize: "10px" }} color="success" />
+            <Typography variant="body2" sx={{ color: "#5E5E5E", paddingLeft: "5px" }}>
+              {totalMemberCount} going
+            </Typography>
+          </Box>
+        </Stack>
+        <Stack>
+          <Typography variant="body2">{`${date}  ${time}`}</Typography>
+          <Stack direction="row" alignItems={"center"}>
+            <LocationOnIcon sx={{ fontSize: "20px" }} />
+            <Typography sx={{ paddingLeft: "5px" }} variant="body2">{event.location}</Typography>
+          </Stack>
+        </Stack>
+      </CardContent>
+    </Card>
+  )
+
 }

@@ -65,7 +65,6 @@ export const confirmAccount = async (confirmAccountBody: IConfirmAccountBody) =>
 export const verifyToken = async () => {
   try {
     setAuthorizationHeader();
-    console.log(axiosInstance.defaults)
     const response = await axiosInstance
       .post<never, AxiosResponse<IServerResponse<null>>>(
         "/auth/verifyToken",

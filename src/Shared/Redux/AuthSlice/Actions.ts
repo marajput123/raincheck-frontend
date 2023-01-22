@@ -30,7 +30,7 @@ export const loginAction = createAsyncThunk(
 
 export const logoutAction = createAsyncThunk(
   "AuthSlice/Logout",
-  async (_, thunkApi) => {
+  (_, thunkApi) => {
     try {
       clearAuthInStorage()
     } catch (err: any) {
@@ -72,6 +72,7 @@ export const initialAuthCheckAction = createAsyncThunk(
         userId: authStorage.userId
       }
     } catch (err: any) {
+      clearAuthInStorage();
       if (err?.response?.data) {
         return thunkApi.rejectWithValue(err.response.data)
       }

@@ -1,4 +1,5 @@
 import { EventhubLocalStorage } from "src/Shared/Contants";
+import { IUser } from "./Models/IUser";
 
 export const EmptyString = "";
 
@@ -63,4 +64,21 @@ export const setAuthInStorage = (accessToken: string, userId: string, persist: b
 export const clearAuthInStorage = () => {
     localStorage.removeItem(EventhubLocalStorage.eventhubAuth)
     sessionStorage.removeItem(EventhubLocalStorage.eventhubAuth)
+}
+
+export const isUserType = (object: any): object is IUser => {
+    return "email" in object
+}
+
+export const randomImage = () => {
+    const imageuris = [
+        "https://images.unsplash.com/photo-1626058356005-3c9211371aa5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
+        "https://images.unsplash.com/photo-1615829253947-faef9cf73097?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
+        "https://images.unsplash.com/photo-1673624801456-91d2af12ebf7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1036&q=80",
+        "https://images.unsplash.com/photo-1673864489231-b6708695b97a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+        "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1380&q=80",
+        "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1380&q=80"
+    ]
+    const randomIndex = (Math.floor(Math.random()*12))%6
+    return imageuris[randomIndex]
 }

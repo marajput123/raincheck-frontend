@@ -1,23 +1,37 @@
 import { IEvent } from "../Models/IEvent";
 import { faker } from '@faker-js/faker';
+import { axiosInstance, setAuthorizationHeader } from "../Axios";
+import { AxiosResponse } from "axios";
+import { IServerResponse } from "../Models/IServerResponse";
+import { IUser } from "../Models/IUser";
 
-export const fetchEvent = () => {
-    const events: IEvent[] = []
-    for (let i = 0; i < 20; i++) {
-        events.push({
-            _id: faker.database.mongodbObjectId(),
-            date: faker.date.future(),
-            description: faker.lorem.paragraph(),
-            link: "http://localhost:3000/home",
-            location: faker.address.streetAddress(),
-            name: faker.company.name(),
-            organizers: ["3214","123412","124351"],
-            private: (parseInt(faker.random.numeric()) % 2) === 0,
-            roles: ["12412", "12312"],
-            timestamps: faker.date.recent(),
-            versionKey: "v1"
-        })
-    };
 
-    return events;
+export const fetchPublicEvents = async () => {
+    try {
+        setAuthorizationHeader();
+        const response = await axiosInstance.get<never, AxiosResponse<IServerResponse<IEvent[]>>>("/events/public");
+        return response.data;
+      } catch (err) {
+        throw err
+      }
+}
+
+export const fetchAllUserEvents = async () => {
+  try {
+    setAuthorizationHeader();
+    const response = await axiosInstance.get<never, AxiosResponse<IServerResponse<IEvent[]>>>("/events")
+    return response.data
+  } catch (err) {
+    throw err
+  }
+}
+
+export const fetchEvent = async (eventId: string) => {
+  try {
+    setAuthorizationHeader();
+    const response = await axiosInstance.get<never, AxiosResponse<IServerResponse<IEvent>>>(`/events/${eventId}`)
+    return response.data
+  }  catch (err) {
+    throw err
+  }
 }
