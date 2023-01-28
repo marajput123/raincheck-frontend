@@ -1,3 +1,4 @@
+import { Container } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { fetchAllUserEvents } from "src/Shared/Api/Event";
 import { StyledTab, StyledTabs, TabPanel } from "src/Shared/Components/Tabs";
@@ -29,6 +30,7 @@ export const UpcomingEvents = () => {
 
   return (
     <>
+    <Container>
       <StyledTabs value={tabIndex} onChange={handleChange}>
         <StyledTab label={"All my events"} aria-label="phone" />
         <StyledTab label={"Attending"} aria-label="favorite" />
@@ -43,6 +45,7 @@ export const UpcomingEvents = () => {
       <TabPanel value={tabIndex} index={2}>
         <OrganizingEvents events={events} />
       </TabPanel>
+      </Container>
     </>
   )
 }

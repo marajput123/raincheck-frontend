@@ -14,8 +14,10 @@ export const AllEvents = (props: IAllEventsProps) => {
    const { events } = props;
    const navigate = useCustomNavigate()
 
+   console.log(events);
+
    const onEventCardClick = (e: React.SyntheticEvent, event: IEvent) => {
-    navigate(`/app/events/${event._id}`)
+    navigate(`/events/${event._id}`)
    }
 
     return (

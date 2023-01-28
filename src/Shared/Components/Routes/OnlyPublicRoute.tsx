@@ -1,12 +1,13 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../Redux/Store';
+import { useAppSelector } from '../../Redux/Store';
+import Navbar from 'src/Shared/Components/Navbar';
 
 interface IPublicRoute {
     children?: React.ReactChild
 }
 
-const PrivateRoute = (props: IPublicRoute) => {
+export const OnlyPublicRoute = (props: IPublicRoute) => {
     const auth = useAppSelector(state => state.auth);
 
     const renderView = () => {
@@ -18,12 +19,11 @@ const PrivateRoute = (props: IPublicRoute) => {
 
     return (
         <>
-            {auth.isAuthenticated ?
+            <Navbar/>
+            {!auth.isAuthenticated ?
                 renderView() :
                 <Navigate to="/" replace={true} />
             }
         </>
     )
 }
-
-export default PrivateRoute;

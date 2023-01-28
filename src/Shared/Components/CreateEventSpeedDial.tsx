@@ -15,7 +15,7 @@ export const StyledSpeedDialAction = styled(SpeedDialAction)({
 });
 
 export const StyledSpeedDial = styled(SpeedDial)({
-  position: 'absolute',
+  position: 'fixed',
   bottom: 16,
   right: 16,
   alignItems: "flex-end",

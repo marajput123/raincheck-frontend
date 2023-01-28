@@ -82,14 +82,14 @@ export const WideEventCard = (props: IEventCardProps) => {
           </Box>
         </Stack>
         <Stack>
-          <Typography gutterBottom={false} variant="h4" sx={{ fontWeight: 600, marginBottom: "-10px" }}>{event.name}</Typography>
-          <Typography variant="caption">@{organizerUsername}</Typography>
+          <Typography gutterBottom={false} variant="h4" sx={{ fontWeight: 600, marginBottom: "-5px" }}>{event.name}</Typography>
+          <Typography variant="caption" sx={{color:"#9a9a9a"}}>@{organizerUsername}</Typography>
         </Stack>
         <Stack>
           <Typography variant="body2">{`${date}  ${time}`}</Typography>
           <Stack direction="row" alignItems={"center"}>
             <LocationOnIcon sx={{ fontSize: "20px" }} />
-            <Typography sx={{ paddingLeft: "5px" }} variant="body2">{event.location}</Typography>
+            {/* <Typography sx={{ paddingLeft: "5px" }} variant="body2">{event.location}</Typography> */}
           </Stack>
         </Stack>
       </Stack>
@@ -138,11 +138,11 @@ export const EventCard = (props: IEventCardProps) => {
             <Typography
               gutterBottom={false}
               variant="h5"
-              sx={{ fontWeight: 600, marginBottom: "-10px" }}
+              sx={{ fontWeight: 600, marginBottom: "-5px" }}
             >
               {event.name}
             </Typography>
-            <Typography variant="caption">@{organizerUsername}</Typography>
+            <Typography variant="caption" sx={{color:"#9a9a9a"}}>@{organizerUsername}</Typography>
           </Box>
           <Box sx={{ display: "flex", height: "20px", alignItems: "center" }}>
             <CircleIcon sx={{ fontSize: "10px" }} color="success" />
@@ -155,7 +155,7 @@ export const EventCard = (props: IEventCardProps) => {
           <Typography variant="body2">{`${date}  ${time}`}</Typography>
           <Stack direction="row" alignItems={"center"}>
             <LocationOnIcon sx={{ fontSize: "20px" }} />
-            <Typography sx={{ paddingLeft: "5px" }} variant="body2">{event.location}</Typography>
+            {/* <Typography sx={{ paddingLeft: "5px" }} variant="body2">{event.location}</Typography> */}
           </Stack>
         </Stack>
       </CardContent>

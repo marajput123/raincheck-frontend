@@ -1,6 +1,6 @@
-import { List, ListItem } from "@mui/material";
+import { List, ListItem, useMediaQuery } from "@mui/material";
 import { IEvent } from "../Models/IEvent"
-import { WideEventCard } from "./EventCard";
+import { EventCard, WideEventCard } from "./EventCard";
 
 /**
  * @events list of events to be rendered
@@ -12,7 +12,9 @@ interface IEventListProps {
 }
 
 export const EventList = (props: IEventListProps) => {
+    const isMobile = useMediaQuery('(max-width:600px)');
     const { events, onEventCardClick } = props;
+
     return (<List
         sx={{
             display: "flex",
@@ -27,10 +29,12 @@ export const EventList = (props: IEventListProps) => {
                     sx={{
                         maxWidth: "600px",
                         width: "100%",
-                        padding: "10px 16px 25px 16px"
+                        padding: "10px 16px 25px 16px",
+                        display: "flex",
+                        justifyContent: "center"
                     }}
                 >
-                    <WideEventCard event={event} onCardClick={onEventCardClick}/>
+                    {isMobile ? <EventCard event={event} onCardClick={onEventCardClick}/> : <WideEventCard event={event} onCardClick={onEventCardClick}/>}
                 </ListItem>
             )
         })}

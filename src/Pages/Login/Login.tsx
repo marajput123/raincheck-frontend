@@ -11,7 +11,7 @@ const rootStackStyle: SxProps = {
     width: "100%"
 }
 const stackStyle: SxProps = {
-    width: "340px",
+    width: "330px",
     minHeight: "500px",
     paddingTop:"20px"
 }
@@ -23,7 +23,12 @@ interface IFormData {
 }
 
 const Login = () => {
-    useDocumentTitle("Login")
+    useDocumentTitle("Login");
+    
+    const [apiError, setApiError] = useState(false)
+    const dispatch = useAppDispatch()
+    const navigate = useCustomNavigate();
+
     const { handleSubmit, control, reset, formState: { errors, } } = useForm<IFormData>({
         defaultValues: {
             email: "",
@@ -32,9 +37,7 @@ const Login = () => {
         },
         shouldFocusError: true
     });
-    const [apiError, setApiError] = useState(false)
-    const dispatch = useAppDispatch()
-    const navigate = useCustomNavigate();
+    
 
     const onSubmit = async (data: IFormData) => {
         const { email, password, staySignedIn } = data
@@ -77,7 +80,7 @@ const Login = () => {
                             label={"Email"}
                             error={!(!errors.email?.message)}
                             helperText={errors.email?.message}
-                            variant="standard"
+                            variant="outlined"
                         />
                     )}
                 />
@@ -91,7 +94,7 @@ const Login = () => {
                             label={"Password"}
                             error={!(!errors.password?.message)}
                             helperText={errors.password?.message}
-                            variant="standard"
+                            variant="outlined"
                         />
                     )}
                 />

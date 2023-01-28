@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import { signIn, signUp, verifyToken } from "src/Shared/Api/Auth";
+import { signIn, signUp, verifyToken, fetchSelf } from "src/Shared/Api/Auth";
 import { clearAuthInStorage, getAuthFromStorage, setAuthInStorage } from "src/Shared/HelperMethods";
 import { ISignInRequestBody, ISignUpRquestBody } from "src/Shared/Models/IAuth";
 
@@ -17,7 +17,6 @@ export const loginAction = createAsyncThunk(
       const accessToken = content.accessToken;
       const userId = content.user._id
       setAuthInStorage(accessToken, userId, presist);
-      console.log(accessToken);
       return content
     } catch (err: any) {
       if (err?.response?.data) {
@@ -65,10 +64,11 @@ export const initialAuthCheckAction = createAsyncThunk(
       if (!authStorage.accessToken) {
         throw new Error("unauthenticated")
       }
-      await verifyToken();
-      // TODO: Get user right after verifying
+      const verifyResponse = await verifyToken();
+      const authenticatedUser = verifyResponse.content;
+      
       return {
-        user: {},
+        user: authenticatedUser,
         userId: authStorage.userId
       }
     } catch (err: any) {

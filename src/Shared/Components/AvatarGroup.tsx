@@ -41,7 +41,8 @@ export const AvatarGroup = (props: IAvatarGroupProps) => {
                 <Typography
                     variant="caption"
                     sx={{
-                        fontSize: size === "small" ? ".65rem" : ".75rem" 
+                        fontSize: size === "small" ? ".65rem" : ".75rem",
+                        color: "#A4A4A4"
                     }}
                 >{username}</Typography>
             </Stack>

@@ -66,11 +66,24 @@ export const verifyToken = async () => {
   try {
     setAuthorizationHeader();
     const response = await axiosInstance
-      .post<never, AxiosResponse<IServerResponse<null>>>(
+      .post<never, AxiosResponse<IServerResponse<IUser>>>(
         "/auth/verifyToken",
       );
     return response.data;
   } catch (err) {
     throw err
+  }
+}
+
+export const fetchSelf = async () => {
+  try {
+      setAuthorizationHeader();
+      const response = await axiosInstance
+      .get<never, AxiosResponse<IServerResponse<IUser>>>(
+        "/auth/self"
+      );
+      return response.data;
+  } catch (err) {
+      throw err
   }
 }

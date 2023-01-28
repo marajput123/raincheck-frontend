@@ -23,7 +23,6 @@ export const LandingPage = () => {
 
   return (
     <>
-      <Navbar />
       <Stack
         sx={rootStackStyle}
         direction="column"
@@ -41,7 +40,7 @@ export const LandingPage = () => {
           spacing={2}
         >
           <Button
-            onClick={() => auth.isAuthenticated ? onNavigate("/app") : onNavigate("/home")}
+            onClick={() => auth.isAuthenticated ? onNavigate("/app") : onNavigate("/public")}
           >
             Search events
           </Button>

@@ -14,3 +14,8 @@ export enum RoleType {
     Attendee = 'Attendee',
     Volunteer = 'Volunteer'
 }
+
+export interface IMembershipCheck {
+    isMember: boolean;
+    member: IMembership
+}

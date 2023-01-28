@@ -20,7 +20,6 @@ const AuthSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(loginAction.fulfilled, (state, action) => {
-      console.log("here",action)
       state.isAuthenticated = true;
       state.userId = action.payload.user._id
       state.initialAuthCheckCompleted = true;
@@ -30,6 +29,7 @@ const AuthSlice = createSlice({
     })
     .addCase(initialAuthCheckAction.fulfilled, (state, action) => {
       // Check for payload just for safety measure :)
+      state.userId = action.payload.userId
       state.isAuthenticated = true;
       state.initialAuthCheckCompleted = true
     })
@@ -38,6 +38,11 @@ const AuthSlice = createSlice({
       state.initialAuthCheckCompleted = true;
     })
     .addCase(SignUpAction.fulfilled, (state, action) => {
+      // state.isAuthenticated = true;
+      // state.user = action.payload;
+    })
+    .addCase(SignUpAction.rejected, (state, action) => {
+        console.log("here")
       // state.isAuthenticated = true;
       // state.user = action.payload;
     })

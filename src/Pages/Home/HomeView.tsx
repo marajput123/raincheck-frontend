@@ -28,7 +28,6 @@ export const HomeView = () => {
 
   return (
     <>
-      <Navbar />
       <List sx={{display: "flex", overflow: "scroll"}}>
         {events.map((event, index) => {
           return (

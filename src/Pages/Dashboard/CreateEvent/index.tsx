@@ -11,7 +11,7 @@ import AdvancedTab from './Tabs/AdvancedTab';
 import SummaryTab from './Tabs/SummaryTab';
 
 const stackStyle: SxProps = {
-  width: "350px",
+  width: "330px",
   minHeight: "500px",
   paddingTop: "20px"
 }
@@ -64,7 +64,7 @@ export const CreateEventForm = () => {
       const event = response.data.content;
       console.log(event);
       setEventUrl(`www.soshalup.com/app/events/${event._id}`);
-      navigate(`/app/events/${event._id}`);
+      navigate(`/events/${event._id}`);
     } catch (error) {
       console.log(error);
     }
