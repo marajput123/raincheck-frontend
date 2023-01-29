@@ -17,7 +17,7 @@ import { randomImage } from "src/Shared/HelperMethods";
 import { IEvent } from "src/Shared/Models/IEvent";
 import { IServerResponse } from "src/Shared/Models/IServerResponse";
 import { useAppSelector } from "src/Shared/Redux/Store";
-import { Event } from "./Event";
+import { Event } from "./Tabs/Event";
 import { useQueryEvent, useQueryMembershipCheck } from "./EventQuery";
 
 

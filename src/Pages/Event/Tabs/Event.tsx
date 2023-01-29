@@ -1,16 +1,21 @@
 import { Button, Card, CardMedia, Grid, List, ListItem, Skeleton, Stack, SxProps, TextField, Typography } from "@mui/material";
 import moment from "moment";
-import React, { useMemo, useState } from "react"
+import React, { createContext, useContext, useMemo, useState } from "react"
+import { useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
+import { postRSVP, postUnrsvp } from "src/Shared/Api/Event";
 import { AvatarGroup } from "src/Shared/Components/AvatarGroup";
 import { CopyTextArea } from "src/Shared/Components/CopyArea";
 import { StyledLink } from "src/Shared/Components/Link";
 import { MemberCount } from "src/Shared/Components/MemberCounter";
 import { stylePanelBoxShadow } from "src/Shared/Contants";
 import { randomImage } from "src/Shared/HelperMethods";
+import { IRole, RoleType } from "src/Shared/Models/IRole";
 import { IUser } from "src/Shared/Models/IUser";
+import { queryClient } from "src/Shared/ReactQuery";
 import { useAppSelector } from "src/Shared/Redux/Store";
-import { useQueryEvent, useQueryGetMembers, useQueryMembershipCheck } from "./EventQuery";
+import { useQueryEvent, useQueryGetMembers, useQueryMembershipCheck } from "../EventQuery";
+import { getRoleFromEvent } from "../Helpers";
 
 const panelStyle: SxProps = {
     border: "1px solid #EAEAEA",
@@ -25,31 +30,39 @@ const eventPanelStyle: SxProps = {
 
 const memberPanelStyle: SxProps = {
     ...panelStyle,
-    height: "100%"
+    height: "650px"
 }
 
+const EventContext = createContext({
+    refetchMembers: false
+})
+
 export const Event = () => {
+    const eventId = useParams().id!;
+    const authState = useAppSelector(state => state.auth);
 
     return (
         <>
-            <Grid container spacing={2} sx={{ marginTop: "15px" }}>
-                <Grid item xs={12} lg={8}>
-                    <EventPanel />
+            <EventContext.Provider value={{refetchMembers: false}}>
+                <Grid container spacing={2} sx={{ marginTop: "15px" }}>
+                    <Grid item xs={12} lg={8}>
+                        <EventPanel />
+                    </Grid>
+                    <Grid item xs={12} lg={4}>
+                        <MemberPanel />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Card>
+                            <Typography>hello</Typography>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Card>
+                            <Typography>hello world</Typography>
+                        </Card>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} lg={4}>
-                    <MemberPanel />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Card>
-                        <Typography>hello</Typography>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Card>
-                        <Typography>hello world</Typography>
-                    </Card>
-                </Grid>
-            </Grid>
+            </EventContext.Provider>
         </>
     )
 }
@@ -73,15 +86,34 @@ const EventPanel = () => {
     const username = `@${organizer?.username}`;
     const name = `${organizer?.firstName} ${organizer?.lastName}`;
 
-    const onHandleRSVP = () => {
-        if (authState.isAuthenticated) {
+    const onAuthenticatedRSVP = async (roleId: string) => {
+        try {
+            await postRSVP(event._id, roleId);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
+    const onHandleRSVP = async () => {
+        const roleId = getRoleFromEvent(event, RoleType.Attendee)._id;
+        if (authState.isAuthenticated) {
+            await onAuthenticatedRSVP(roleId)
+        }
+    }
+
+    const onHandleUnrsvp = async () => {
+        const memberId = membershipQuery.data.content.member._id;
+        try {
+            await postUnrsvp(memberId);
+        } catch (err) {
+            console.log(err)
         }
     }
 
     if (eventQuery.isLoading || membershipQuery.isLoading) {
         return <Skeleton variant="rounded" width={"100%"} height={"650px"} />
     }
+
 
     return (
         <Card
@@ -102,7 +134,11 @@ const EventPanel = () => {
                         sx={{ flex: 3, maxWidth: "140px" }}
                         spacing={1}
                     >
-                        <Button onClick={onHandleRSVP} variant="contained">RSVP</Button>
+                        {
+                            membershipQuery?.data?.content.isMember ? 
+                                <Button onClick={onHandleUnrsvp} variant="contained">UNRSVP</Button> :
+                                <Button onClick={onHandleRSVP} variant="contained">RSVP</Button>
+                        }
                         <MemberCount totalMemberCount={3} />
                     </Stack>
                 </Stack>
@@ -134,7 +170,8 @@ const MemberPanel = () => {
     const membershipQuery = useQueryMembershipCheck(eventId, authState.userId, authState.isAuthenticated);
     const membersQuery = useQueryGetMembers(eventId, authState.isAuthenticated);
 
-    const imageUri = randomImage();
+    // const imageUri = randomImage();
+    const imageUri = useMemo(() => randomImage(), []);
 
     if (membershipQuery.isLoading || membershipQuery.isLoading) {
         return <Skeleton variant="rounded" width={"100%"} height={"100%"} />
@@ -149,9 +186,9 @@ const MemberPanel = () => {
                         <Stack>
                             <TextField disabled label="Search by name"></TextField>
                         </Stack>
-                        <List>
-                            {membersQuery.data?.content.map(member => (
-                                <React.Fragment key={member.username}>
+                        <List sx={{height: "500px", overflow: "scroll"}}>
+                            {membersQuery.data?.content.map((member, index) => (
+                                <React.Fragment key={member.username + index}>
                                     <ListItem sx={{ paddingLeft: "0px" }}>
                                         <AvatarGroup
                                             imageuri={imageUri}

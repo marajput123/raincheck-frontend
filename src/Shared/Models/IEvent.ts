@@ -1,4 +1,5 @@
 import { IMembership } from "./IMembership";
+import { IRole } from "./IRole";
 import { IUser } from "./IUser"
 
 export interface IEvent{
@@ -9,7 +10,7 @@ export interface IEvent{
   description: string;
   location: string;
   link: string;
-  roles: string[];
+  roles: string[] | IRole[];
   private: boolean;
   timestamps: Date
   versionKey: string;

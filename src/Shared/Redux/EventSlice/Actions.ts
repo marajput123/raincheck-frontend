@@ -16,13 +16,6 @@ interface IGetEventReturn {
 export const getEventAction = createAsyncThunk<any, IGetEventParameters, {state: RootState}>(
   "Event/Get",
   async (params, thunkApi) => {
-    const {eventId} = params;
-    const userId = thunkApi.getState().userAccount?.user._id;
-    
-    // try {
-    //     const responses = Promise.all([fetchEvent(eventId), fetchMembershipCheck(eventId, userId)])
-    // } catch (err: any) {
-      
-    // }
+
   }
 )

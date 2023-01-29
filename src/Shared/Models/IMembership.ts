@@ -19,3 +19,12 @@ export interface IMembershipCheck {
     isMember: boolean;
     member: IMembership
 }
+
+export interface IRsvpRequestBody {
+    eventId: string;
+    roleId: string;
+}
+
+export interface IUnrsvpRequestBody {
+    memberId: string
+}

@@ -1,15 +1,23 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IEvent } from 'src/Shared/Models/IEvent'
+import {createSlice} from "@reduxjs/toolkit";
+import { EmptyString } from "src/Shared/HelperMethods";
+import { IUser } from "src/Shared/Models/IUser";
+import { initialAuthCheckAction, loginAction, logoutAction, SignUpAction } from "src/Shared/Redux//AuthSlice/Actions";
 
-// Define a service using a base URL and expected endpoints
-export const pokemonApi = createApi({
-  reducerPath: 'pokemonApi',
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000" }),
-  endpoints: (builder) => ({
-    getPokemonByName: builder.query<IEvent, string>({
-      query: (name) => `pokemon/${name}`,
-    }),
-  }),
+interface EventReducerState {
+    user: IUser
+}
+const initialState: EventReducerState = {
+    user: null
+}
+
+const EventSlice = createSlice({
+  name: "EventSlice",
+  initialState,
+  reducers:{},
+  extraReducers: (builder) => {
+    builder
+  }
 });
 
-export const { useGetPokemonByNameQuery } = pokemonApi
+export const UserAccountSliceActions = EventSlice.actions;
+export default EventSlice.reducer;

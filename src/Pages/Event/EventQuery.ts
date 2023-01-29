@@ -10,5 +10,5 @@ export const useQueryMembershipCheck = (eventId: string, userId: string, isAuthe
 }
 
 export const useQueryGetMembers = (eventId: string, isAuthenticated: boolean) => {
-    return useQuery("fetchEventMemebers", () => fetchEventMemberList(eventId), {enabled: !!eventId && isAuthenticated});
+    return useQuery("Event/FetchEventMemebers", () => fetchEventMemberList(eventId), {enabled: !!eventId && isAuthenticated});
 }
