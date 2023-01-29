@@ -1,21 +1,28 @@
+import axios from "axios";
 import _axios from "axios"
-import { EventhubLocalStorage } from "src/Shared/Contants";
+import { accessTokenHeaderName } from "src/Shared/Contants";
+import { getAccessTokenFromStorage, getContentFromLocalStorage, setAuthInStorage } from "../HelperMethods";
 
 const BASE_URL = "http://localhost:4000"
 
-export const setAuthorizationHeader = () => {
-  let eventhubAuthStorage = sessionStorage.getItem(EventhubLocalStorage.eventhubAuth);
-
-  if (!eventhubAuthStorage) {
-    eventhubAuthStorage = localStorage.getItem(EventhubLocalStorage.eventhubAuth);
-  }
-
-  if (eventhubAuthStorage) {
-    const parsedEventhubAuthStorage = JSON.parse(eventhubAuthStorage);
-    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${parsedEventhubAuthStorage.accessToken}`
-  } 
-};
-
 export const axiosInstance = _axios.create({
   baseURL:BASE_URL,
+  withCredentials: true,
 });
+
+axiosInstance.interceptors.response.use((config) => {
+    const newAccessToken = config.headers[accessTokenHeaderName];
+    const storageContent = getContentFromLocalStorage();
+    if (newAccessToken && newAccessToken !== storageContent?.accessToken) {
+        setAuthInStorage(newAccessToken, storageContent?.accessToken ? true : false);
+    }
+    return config;
+})
+
+axiosInstance.interceptors.request.use((config) => {
+    const accessToken = getAccessTokenFromStorage();
+    if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`
+    }
+    return config
+})

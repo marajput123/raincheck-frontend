@@ -30,34 +30,44 @@ export const mockAsync = async (returnValue: any, seconds = 3000) => {
 }
 
 
-interface IAuthFromStorage {
-    accessToken?: string;
-    userId?: string
+export const getAccessTokenFromStorage = (): string => {
+    let storageContent = getContentFromLocalStorage();
+    if (!storageContent?.accessToken) {
+        storageContent = getContentFromSessionStorage()
+    }
+
+    if (!storageContent) {
+        return
+    }
+
+    return storageContent.accessToken as string
+};
+
+export const getContentFromLocalStorage = () => {
+    const authStorage = localStorage.getItem(EventhubLocalStorage.eventhubAuth);
+    if (!authStorage) {
+        return
+    }
+    const parsedStorage = JSON.parse(authStorage)
+    return {accessToken: parsedStorage.accessToken}
+};
+
+export const getContentFromSessionStorage = () => {
+    const authStorage = sessionStorage.getItem(EventhubLocalStorage.eventhubAuth);
+    if (!authStorage) {
+        return
+    }
+    const parsedStorage = JSON.parse(authStorage)
+    return {accessToken: parsedStorage.accessToken}
 }
 
-export const getAuthFromStorage = (): IAuthFromStorage => {
-    let eventhubAuthStorage = sessionStorage.getItem(EventhubLocalStorage.eventhubAuth);
-    if(!eventhubAuthStorage){
-        eventhubAuthStorage= localStorage.getItem(EventhubLocalStorage.eventhubAuth);
-    }
-  
-    if (!eventhubAuthStorage) {
-      return {}
-    } else {
-      const parsedEventhubAuthStorage = JSON.parse(eventhubAuthStorage);
-      return {
-        accessToken: parsedEventhubAuthStorage.accessToken,
-        userId: parsedEventhubAuthStorage.userId
-      }
-    }
-  };
-
-export const setAuthInStorage = (accessToken: string, userId: string, persist: boolean) => {
+export const setAuthInStorage = (accessToken: string, persist: boolean) => {
     if (persist) {
-        localStorage.setItem(EventhubLocalStorage.eventhubAuth, JSON.stringify({ accessToken, userId }))
+        localStorage.setItem(EventhubLocalStorage.eventhubAuth, JSON.stringify({ accessToken }))
     } else {
-        sessionStorage.setItem(EventhubLocalStorage.eventhubAuth, JSON.stringify({ accessToken, userId }))
+        sessionStorage.setItem(EventhubLocalStorage.eventhubAuth, JSON.stringify({ accessToken }))
     }
+
 }
 
 
@@ -79,6 +89,6 @@ export const randomImage = () => {
         "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1380&q=80",
         "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1380&q=80"
     ]
-    const randomIndex = (Math.floor(Math.random()*12))%6
+    const randomIndex = (Math.floor(Math.random() * 12)) % 6
     return imageuris[randomIndex]
 }

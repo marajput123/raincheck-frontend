@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Typography, Button, Stack, SxProps, CircularProgress,
          Box, Stepper, Step, StepLabel } from '@mui/material';
-import { axiosInstance, setAuthorizationHeader } from "src/Shared/Axios";
+import { axiosInstance } from "src/Shared/Axios";
 import { useDocumentTitle } from 'src/Shared/Hooks/useDocumentTitle';
 import { useForm, UseFormReturn } from "react-hook-form";
 import { useCustomNavigate } from 'src/Shared/Hooks/useCustomNavigate';
@@ -58,7 +58,7 @@ export const CreateEventForm = () => {
     }
 
     try {
-      setAuthorizationHeader();
+      ;
       const response = await axiosInstance
         .post("/events", data);
       const event = response.data.content;

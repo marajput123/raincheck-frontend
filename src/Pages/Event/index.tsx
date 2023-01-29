@@ -6,7 +6,7 @@ import { useMemo, useState } from "react"
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { fetchEvent, fetchMembershipCheck } from "src/Shared/Api/Event";
-import { axiosInstance, setAuthorizationHeader } from "src/Shared/Axios";
+import { axiosInstance } from "src/Shared/Axios";
 import { AvatarGroup } from "src/Shared/Components/AvatarGroup";
 import { CopyTextArea } from "src/Shared/Components/CopyArea";
 import { StyledLink } from "src/Shared/Components/Link";

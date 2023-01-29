@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import { signIn, signUp, verifyToken, fetchSelf } from "src/Shared/Api/Auth";
-import { clearAuthInStorage, getAuthFromStorage, setAuthInStorage } from "src/Shared/HelperMethods";
+import { clearAuthInStorage, getAccessTokenFromStorage, setAuthInStorage } from "src/Shared/HelperMethods";
 import { ISignInRequestBody, ISignUpRquestBody } from "src/Shared/Models/IAuth";
 
 interface ISignInParameters {
@@ -15,8 +15,7 @@ export const loginAction = createAsyncThunk(
       const signInResponse = await signIn(credentials);
       const content = signInResponse.content
       const accessToken = content.accessToken;
-      const userId = content.user._id
-      setAuthInStorage(accessToken, userId, presist);
+      setAuthInStorage(accessToken, presist);
       return content
     } catch (err: any) {
       if (err?.response?.data) {
@@ -60,8 +59,8 @@ export const initialAuthCheckAction = createAsyncThunk(
   "AuthSlice/IntialAuthCheck",
   async (_, thunkApi) => {
     try {
-      const authStorage = getAuthFromStorage();
-      if (!authStorage.accessToken) {
+      const accessToken = getAccessTokenFromStorage();
+      if (!accessToken) {
         throw new Error("unauthenticated")
       }
       const verifyResponse = await verifyToken();
@@ -69,7 +68,7 @@ export const initialAuthCheckAction = createAsyncThunk(
       
       return {
         user: authenticatedUser,
-        userId: authStorage.userId
+        userId: authenticatedUser._id
       }
     } catch (err: any) {
       clearAuthInStorage();

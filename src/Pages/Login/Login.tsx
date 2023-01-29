@@ -47,8 +47,8 @@ const Login = () => {
                 onNavigate("/app")
             }
         } catch (err: any) {
+            console.log(err)
             if (err?.error?.length !== 0) {
-                console.log(err)
                 if (err.error[0].type === ServerErrorTypes.ACCOUNT_UNCONFIRMED) {
                     onNavigate(`/auth/verify?username=${email}`)
                 }
