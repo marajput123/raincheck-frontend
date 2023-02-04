@@ -11,3 +11,20 @@ export const getRoleFromEvent = (event: IEvent, roleType: RoleType) => {
     });
     return event.roles[index] as IRole;
 }
+
+export const findEventMemberIdFromSession = (eventId: string) => {
+  const stringifiedEvents = localStorage.getItem("evntr-guest-events");
+  if (!stringifiedEvents) {
+    return;
+  }
+
+  const events = JSON.parse(stringifiedEvents) as {eventId: string; memberId: string}[];
+  const event = events.find((event) => event.eventId === eventId);
+
+  if(!event) {
+    return
+  }
+
+  return event.memberId;
+
+};

@@ -21,7 +21,7 @@ export const AllEvents = (props: IAllEventsProps) => {
    }
 
     return (
-        <Box sx={{ overflow: "scroll" }}>
+        <Box>
             <EventList events={events} onEventCardClick={onEventCardClick} />
         </Box>
     )

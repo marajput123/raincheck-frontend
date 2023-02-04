@@ -25,7 +25,7 @@ export const AttendingEvents = (props: IAttendingEventsProps) => {
     }, []);
 
     return (
-        <Box sx={{ overflow: "scroll" }}>
+        <Box>
             <EventList events={intialEvent} onEventCardClick={onEventCardClick}/>
         </Box>
     )

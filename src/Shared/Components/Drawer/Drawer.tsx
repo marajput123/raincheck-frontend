@@ -20,7 +20,6 @@ const imagesrc = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?i
 
 export const PersistentDrawer = () => {
   const [open, setOpen] = useState(false);
-  const [selectedMenuItemKey, setSelectedMenuItemKey] = useState<MenuItemKeys | null>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
@@ -28,7 +27,6 @@ export const PersistentDrawer = () => {
     if (to) {
       navigate(to)
     }
-    setSelectedMenuItemKey(options.menuItemKey);
   };
 
   const onLogoutClick = () => {
@@ -61,9 +59,9 @@ export const PersistentDrawer = () => {
                   label={menuItem.label}
                   isDrawerOpen={open}
                   menuItemKey={menuItem.key}
-                  onClick={(_, options) => onSelect(options, menuItem.to)}
-                  selectedKey={selectedMenuItemKey}
                   icon={menuItem.icon}
+                  highlightOnPath={menuItem.highlightOnPath}
+                  onClick={(_, options) => onSelect(options, menuItem.to)}
                 />
               </React.Fragment>
             ))}
@@ -79,7 +77,6 @@ export const PersistentDrawer = () => {
               label={"Logout"}
               isDrawerOpen={open}
               menuItemKey={MenuItemKeys.logout}
-              selectedKey={selectedMenuItemKey}
               onClick={onLogoutClick}
               icon={<LogoutIcon sx={{ color: "black" }} />}
             />
@@ -92,7 +89,6 @@ export const PersistentDrawer = () => {
 
 export const SwipeableTemporaryDrawer = () => {
   const [state, setState] = useState(false);
-  const [selectedMenuItemKey, setSelectedMenuItemKey] = useState<MenuItemKeys | null>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
@@ -100,7 +96,6 @@ export const SwipeableTemporaryDrawer = () => {
     if (to) {
       navigate(to)
     }
-    setSelectedMenuItemKey(options.menuItemKey);
   };
 
   const onLogoutClick = () => {
@@ -136,9 +131,9 @@ export const SwipeableTemporaryDrawer = () => {
                 <SwipableMenuItem
                   label={menuItem.label}
                   menuItemKey={menuItem.key}
-                  onClick={(_, options) => onSelect(options, menuItem.to)}
-                  selectedKey={selectedMenuItemKey}
                   icon={menuItem.icon}
+                  highlightOnPath={menuItem.highlightOnPath}
+                  onClick={(_, options) => onSelect(options, menuItem.to)}
                 />
               </React.Fragment>
             ))}

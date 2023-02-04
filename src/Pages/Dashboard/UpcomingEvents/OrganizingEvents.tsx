@@ -22,10 +22,10 @@ export const OrganizingEvents = (props:IAttendingEventsProps) => {
         return props.events.filter((event) => {
             return event?.metadata?.userMembership?.roleType === RoleType.Organizer
         })
-    }, []);
+    }, [props.events]);
 
     return (
-        <Box sx={{ overflow: "scroll" }}>
+        <Box>
             <EventList events={intialEvent} onEventCardClick={onEventCardClick}/>
         </Box>
     )

@@ -17,7 +17,7 @@ export enum RoleType {
 
 export interface IMembershipCheck {
     isMember: boolean;
-    member: IMembership
+    member?: IMembership
 }
 
 export interface IRsvpRequestBody {

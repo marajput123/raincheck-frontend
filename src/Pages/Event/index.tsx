@@ -1,9 +1,5 @@
-import { Avatar, Button, Card, CardMedia, Container, Grid, Stack, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { AxiosResponse } from "axios";
-import moment from "moment";
-import { useMemo, useState } from "react"
-import { useQuery } from "react-query";
+import { Container } from "@mui/material";
+import { useState } from "react"
 import { useParams } from "react-router-dom";
 import { fetchEvent, fetchMembershipCheck } from "src/Shared/Api/Event";
 import { axiosInstance } from "src/Shared/Axios";
@@ -26,9 +22,6 @@ export const EventPage = () => {
     const authState = useAppSelector(state => state.auth);
     const [tabIndex, setTabIndex] = useState(0);
 
-    useQueryEvent(eventId)
-    useQueryMembershipCheck(eventId, authState.userId, authState.isAuthenticated);
-    
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
     };
