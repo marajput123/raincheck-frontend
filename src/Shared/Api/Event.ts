@@ -7,13 +7,13 @@ import { IMembership, IMembershipCheck, IRsvpRequestBody, IUnrsvpRequestBody } f
 
 
 export const fetchPublicEvents = async () => {
-    try {
-        ;
-        const response = await axiosInstance.get<never, AxiosResponse<IServerResponse<IEvent[]>>>("/events/public");
-        return response.data;
-      } catch (err) {
-        throw err
-      }
+  try {
+    ;
+    const response = await axiosInstance.get<never, AxiosResponse<IServerResponse<IEvent[]>>>("/events/public");
+    return response.data;
+  } catch (err) {
+    throw err
+  }
 }
 
 export const fetchAllUserEvents = async () => {
@@ -31,7 +31,7 @@ export const fetchEvent = async (eventId: string) => {
     ;
     const response = await axiosInstance.get<never, AxiosResponse<IServerResponse<IEvent[]>>>(`/events/${eventId}`)
     return response.data
-  }  catch (err) {
+  } catch (err) {
     throw err
   }
 }
@@ -42,50 +42,60 @@ export const fetchEventMemberList = async (eventId: string) => {
     ;
     const response = await axiosInstance.get<never, AxiosResponse<IServerResponse<Omit<IUser, "_id">[]>>>(`/events/${eventId}/members`);
     return response.data;
-  }  catch (err) {
+  } catch (err) {
     throw err
   }
 }
 
 export const fetchMembershipCheck = async (eventId: string, userId: string) => {
-try {
+  try {
     ;
     const response = await axiosInstance.get<never, AxiosResponse<IServerResponse<IMembershipCheck>>>(`/events/${eventId}/members/${userId}`);
     return response.data;
-  }  catch (err) {
+  } catch (err) {
     throw err
   }
 }
 
-export const postGuestRSVP = async () => {
 
+export const postGuestRSVP = async (rsvpBody: IRsvpRequestBody) => {
+  try {
+    ;
+    const response = await axiosInstance.post<never, AxiosResponse<IServerResponse<IMembership>>, IRsvpRequestBody>(
+      `/rsvp/guest`,
+      rsvpBody
+    );
+    return response.data;
+  } catch (err) {
+    throw err
+  }
 }
 
 export const postRSVP = async (eventId: string, roleId: string) => {
-    try {
-        ;
-        const response = await axiosInstance.post<never, AxiosResponse<IServerResponse<IMembership>>, IRsvpRequestBody>(
-            `/rsvp`,
-            {
-                eventId: eventId,
-                roleId: roleId
-            }
-        );
-        return response.data;
-      } catch (err) {
-        throw err
+  try {
+    ;
+    const response = await axiosInstance.post<never, AxiosResponse<IServerResponse<IMembership>>, IRsvpRequestBody>(
+      `/rsvp`,
+      {
+        eventId: eventId,
+        roleId: roleId
       }
+    );
+    return response.data;
+  } catch (err) {
+    throw err
+  }
 }
 
 export const postUnrsvp = async (memberId: string) => {
-    try {
-        ;
-        const response = await axiosInstance.delete<never, AxiosResponse<IServerResponse<null>>, IUnrsvpRequestBody>(
-            `/rsvp`,
-            {data: {memberId}}
-        );
-        return response.data;
-      } catch (err) {
-        throw err
-      }
+  try {
+    ;
+    const response = await axiosInstance.delete<never, AxiosResponse<IServerResponse<null>>, IUnrsvpRequestBody>(
+      `/rsvp`,
+      { data: { memberId } }
+    );
+    return response.data;
+  } catch (err) {
+    throw err
+  }
 }

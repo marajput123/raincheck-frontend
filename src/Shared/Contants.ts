@@ -1,3 +1,5 @@
+export const APP_NAME = 'evntr';
+
 export enum SessionCookie {
   tmp_product_id = "tmp-product-id",
   tmp_product_staySignedIn = "tmp-product-staySignedIn"

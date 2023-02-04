@@ -21,8 +21,11 @@ export interface IMembershipCheck {
 }
 
 export interface IRsvpRequestBody {
-    eventId: string;
-    roleId: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    roleId: string,
+    eventId: string,
 }
 
 export interface IUnrsvpRequestBody {
