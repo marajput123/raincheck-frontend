@@ -1,11 +1,10 @@
 import axios from "axios";
-import _axios from "axios"
 import { accessTokenHeaderName } from "src/Shared/Contants";
 import { getAccessTokenFromStorage, getContentFromLocalStorage, setAuthInStorage } from "../HelperMethods";
 
 const BASE_URL = "http://localhost:4000"
 
-export const axiosInstance = _axios.create({
+export const axiosInstance = axios.create({
   baseURL:BASE_URL,
   withCredentials: true,
 });
