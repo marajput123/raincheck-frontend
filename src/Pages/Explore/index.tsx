@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Typography, styled, Stack, Box, CircularProgress} from "@mui/material";
+import { Typography, styled, Stack, Box, CircularProgress } from "@mui/material";
 import { useDocumentTitle } from "src/Shared/Hooks/useDocumentTitle";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
@@ -42,28 +42,28 @@ export const ExplorePage = () => {
 
   if (!isLocationLoaded) {
     return (
-        <Container sx={{height: "80vh"}}>
-          <Spinner/>
-        </Container>
+      <Container sx={{ height: "80vh" }}>
+        <Spinner />
+      </Container>
     )
   }
 
   return (
-    <Container maxWidth="xl">
-      <Stack alignItems={"center"} spacing={3}>
+    <Stack alignItems={"center"} sx={{width: "100%"}}>
+      <Stack sx={{ maxWidth: "1000px", width:"inherit" }} alignItems={"center"} spacing={3}>
         <Typography>Explore page</Typography>
         <StyleSearchBar fullWidth label="Search" />
         <NearbyEvents
           latitude={coordinates.latitude}
           longitude={coordinates.longitude}
-          />
+        />
         <RecomendedEvents
           latitude={coordinates.latitude}
           longitude={coordinates.longitude}
         />
-        {authState.isAuthenticated && <MyEvents/>}
+        {authState.isAuthenticated && <MyEvents />}
       </Stack>
-    </Container>
+    </Stack>
   );
 };
 

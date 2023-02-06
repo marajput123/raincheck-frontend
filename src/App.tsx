@@ -29,6 +29,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initialAuthCheckAction());
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [])
 
   useEffect(() => {
