@@ -1,5 +1,5 @@
 import { List, ListItem, useMediaQuery } from "@mui/material";
-import { IEvent } from "../Models/IEvent"
+import { IEvent } from "../../Models/IEvent"
 import { EventCard, WideEventCard } from "./EventCard";
 
 /**
@@ -8,18 +8,22 @@ import { EventCard, WideEventCard } from "./EventCard";
  */
 interface IEventListProps {
     events: IEvent[];
+    direction?: "row" | "column";
+    enableScroll?: boolean
     onEventCardClick?: (e: React.SyntheticEvent, event: IEvent) => void
 }
 
 export const EventList = (props: IEventListProps) => {
+    const { events, enableScroll, direction, onEventCardClick} = props;
     const isMobile = useMediaQuery('(max-width:600px)');
-    const { events, onEventCardClick } = props;
 
     return (<List
         sx={{
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
+            flexDirection: direction === "row" ? "row" : "column",
+            alignItems: "center",
+            width: "100%",
+            overflowX: direction === "row" && enableScroll ? "scroll" : "hidden"
         }}
     >
         {events.map((event, index) => {

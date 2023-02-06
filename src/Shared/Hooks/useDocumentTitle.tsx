@@ -6,8 +6,9 @@ export const useDocumentTitle = (title: string, prevailOnDismount=false) => {
     document.title = `Event App | ${title}`;
     return () => {
       if(!prevailOnDismount){
+        /* eslint-disable react-hooks/exhaustive-deps */
         document.title = previousDocumentTitle.current
       }
     }
-  }, [])
+  }, [title, prevailOnDismount])
 }

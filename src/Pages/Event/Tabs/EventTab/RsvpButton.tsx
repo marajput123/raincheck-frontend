@@ -1,7 +1,7 @@
 import { Button, Skeleton } from "@mui/material";
 import {  useState, useEffect } from "react"
 import { useSearchParams } from "react-router-dom";
-import { postGuestRSVP, postRSVP, postUnrsvp } from "src/Shared/Api/Event";
+import { postGuestRSVP, postRSVP, postUnrsvp } from "src/Shared/Api/Rsvp";
 import { BasicModal } from "src/Shared/Components/BasicModal";
 import { EmptyString } from "src/Shared/HelperMethods";
 import { IEvent } from "src/Shared/Models/IEvent";

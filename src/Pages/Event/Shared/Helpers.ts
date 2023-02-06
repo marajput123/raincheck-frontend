@@ -1,7 +1,7 @@
 import { APP_NAME } from "src/Shared/Contants";
 import { IEvent } from "src/Shared/Models/IEvent";
 import { IGuestSession } from "src/Shared/Models/IGuestSession";
-import { RoleType } from "src/Shared/Models/IMembership";
+import { RoleType } from "src/Shared/Models/IRole";
 import { IRole } from "src/Shared/Models/IRole";
 
 /**
@@ -53,8 +53,6 @@ export const saveGuestMemberSession = (eventId: string, memberId: string, userId
   try {
     saveGuestSession([...currentSessions, guestSession])
   } catch (error) {
-    // TODO: Remove console.log
-    console.log(error);
     saveGuestSession([guestSession])
   }
 }
@@ -79,7 +77,7 @@ export const removeGuestMemberSession = (memberId: string) => {
  */
 export const saveGuestSession = (sessions: IGuestSession[]) => {
   const updatedSessions = JSON.stringify(sessions);
-  localStorage.setItem(`${APP_NAME}-guest-session`, updatedSessions);
+  sessionStorage.setItem(`${APP_NAME}-guest-session`, updatedSessions);
 }
 
 /**
@@ -87,7 +85,7 @@ export const saveGuestSession = (sessions: IGuestSession[]) => {
  * @returns IGuestSession 
  */
 export const getGuestSession = () => {
-  const stringifiedSessions = localStorage.getItem(`${APP_NAME}-guest-session`);
+  const stringifiedSessions = sessionStorage.getItem(`${APP_NAME}-guest-session`);
   if (!stringifiedSessions) {
     return [];
   }

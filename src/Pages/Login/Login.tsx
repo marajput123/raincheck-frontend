@@ -29,7 +29,7 @@ const Login = () => {
     const dispatch = useAppDispatch()
     const navigate = useCustomNavigate();
 
-    const { handleSubmit, control, reset, formState: { errors, } } = useForm<IFormData>({
+    const { handleSubmit, control, formState: { errors, } } = useForm<IFormData>({
         defaultValues: {
             email: "",
             password: "",
@@ -44,7 +44,7 @@ const Login = () => {
         try {
             const action = await dispatch(loginAction({ credentials: {username: email, password: password}, presist: staySignedIn })).unwrap()
             if (action) {
-                onNavigate("/app")
+                onNavigate("/")
             }
         } catch (err: any) {
             console.log(err)

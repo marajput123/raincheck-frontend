@@ -9,11 +9,6 @@ export interface IMembership {
     user: IUser | string;
 }
 
-export enum RoleType {
-    Organizer = 'Organizer',
-    Attendee = 'Attendee',
-    Volunteer = 'Volunteer'
-}
 
 export interface IMembershipCheck {
     isMember: boolean;

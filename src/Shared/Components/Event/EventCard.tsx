@@ -1,14 +1,14 @@
 import React, { useMemo } from "react";
 import moment from "moment";
-import { Typography, Stack, Card, Box, SxProps, CardMedia, CardContent } from "@mui/material";
-import { IEvent } from "../Models/IEvent"
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CircleIcon from '@mui/icons-material/Circle';
 import { faker } from "@faker-js/faker";
-import { AttendeeChip, OrganizerChip } from "./Chips";
-import { styleCardBoxShadow } from "../Contants";
-import { RoleType } from "../Models/IMembership";
-import { randomImage } from "../HelperMethods";
+import { Typography, Stack, Card, Box, SxProps, CardMedia, CardContent } from "@mui/material";
+import { IEvent } from "src/Shared/Models/IEvent"
+import { AttendeeChip, OrganizerChip } from "src/Shared/Components/Chips";
+import { styleCardBoxShadow } from "src/Shared/Contants";
+import { RoleType } from "src/Shared/Models/IRole";
+import { randomImage } from "src/Shared/HelperMethods";
 
 const cardStyle: SxProps = {
   width: "315px",
@@ -53,7 +53,7 @@ export const WideEventCard = (props: IEventCardProps) => {
       return event.organizers[0].username;
     }
     return null
-  }, [])
+  }, [event.organizers])
 
   const onCardClick = (e: React.SyntheticEvent) => {
     if (props.onCardClick) {

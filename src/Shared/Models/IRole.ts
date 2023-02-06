@@ -8,6 +8,7 @@ export interface IRole {
 }
 
 export enum RoleType {
-    Organizer = "Organizer",
-    Attendee = "Attendee",
+    Organizer = 'Organizer',
+    Attendee = 'Attendee',
+    Volunteer = 'Volunteer'
 }

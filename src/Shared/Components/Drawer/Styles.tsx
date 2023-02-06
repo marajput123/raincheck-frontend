@@ -2,12 +2,7 @@ import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { SwipeableDrawer } from '@mui/material';
 
-
-
-
 const drawerWidth = 280;
-
-
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,

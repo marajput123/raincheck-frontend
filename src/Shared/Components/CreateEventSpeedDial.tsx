@@ -1,4 +1,4 @@
-import { Button, SpeedDial, SpeedDialAction, Stack, styled, Typography } from "@mui/material";
+import { SpeedDial, SpeedDialAction, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import { useCustomNavigate } from "../Hooks/useCustomNavigate";
@@ -11,7 +11,7 @@ export const StyledSpeedDialAction = styled(SpeedDialAction)({
   margin: "0px",
   marginBottom: "10px",
   boxShadow: "none",
-  border: "1px solid black"
+  border: "1px solid black",
 });
 
 export const StyledSpeedDial = styled(SpeedDial)({
