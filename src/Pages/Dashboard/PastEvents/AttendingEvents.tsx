@@ -1,5 +1,5 @@
 import React from "react"
-import { Stack, Typography } from "@mui/material"
+import { Stack } from "@mui/material"
 import { EventList } from "src/Shared/Components/Event/EventList";
 import { useCustomNavigate } from "src/Shared/Hooks/useCustomNavigate";
 import { IEvent } from "src/Shared/Models/IEvent"
@@ -9,16 +9,15 @@ import { RoleType } from "src/Shared/Models/IRole";
 import { useCustomInfiniteQuery } from "./Shared/Hook";
 import { Spinner } from "src/Shared/Components/Spinner";
 
-interface IAttendingEventsProps {
-}
 
 
-export const OrganizingEvents = (props: IAttendingEventsProps) => {
+
+export const AttendingEvents = () => {
   const navigate = useCustomNavigate();
 
-  const { isLoading, error, data, onInfiniteTrigger } = useCustomInfiniteQuery(
-    "EventListInifinite/FetchMyUpcomingOrganizingEvents",
-    ({ pageParam = 1 }) => fetchMyEvents({ page: pageParam - 1, role: RoleType.Organizer, "startDate[$gte]": new Date().toISOString() })
+  const {isLoading, error, data, onInfiniteTrigger} = useCustomInfiniteQuery(
+    "EventListInifinite/FetchMyPastAttendingEvents",
+    ({ pageParam = 1 }) => fetchMyEvents({ page: pageParam - 1, role: RoleType.Attendee, "startDate[$lte]": new Date().toISOString() })
   );
 
   const onEventCardClick = (e: React.SyntheticEvent, event: IEvent) => {
@@ -26,7 +25,7 @@ export const OrganizingEvents = (props: IAttendingEventsProps) => {
   }
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner/>
   }
 
   if (error) {
@@ -35,19 +34,12 @@ export const OrganizingEvents = (props: IAttendingEventsProps) => {
 
   return (
     <Stack alignItems={"center"}>
-      {data?.pages?.map((page, index) => {
-        if (page.content.length === 0) {
-          return null;
-        }
-        return (<React.Fragment key={index}>
+      {data.pages.map((page, index) => (
+        <React.Fragment key={index}>
           <EventList events={page.content} onEventCardClick={onEventCardClick} />
-        </React.Fragment>)
-      })}
+        </React.Fragment>
+      ))}
       <InfinitLoaderTrigger onTriggerCallback={onInfiniteTrigger} />
-      {
-        data?.pages[0].content.length === 0 &&
-        <Typography>No upcoming events</Typography>
-      }
     </Stack>
   )
 }

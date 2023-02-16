@@ -31,8 +31,8 @@ const Login = () => {
 
     const { handleSubmit, control, formState: { errors, } } = useForm<IFormData>({
         defaultValues: {
-            email: "",
-            password: "",
+            email: "omar.h@myyahoo.com",
+            password: "Test123!",
             staySignedIn: false
         },
         shouldFocusError: true

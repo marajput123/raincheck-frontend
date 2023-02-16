@@ -9,13 +9,30 @@ import { EventCard, WideEventCard } from "./EventCard";
 interface IEventListProps {
     events: IEvent[];
     direction?: "row" | "column";
-    enableScroll?: boolean
+    enableScroll?: boolean;
+    cardType?: "normal" | "wide" | "responsive";
     onEventCardClick?: (e: React.SyntheticEvent, event: IEvent) => void
 }
 
 export const EventList = (props: IEventListProps) => {
-    const { events, enableScroll, direction, onEventCardClick} = props;
+    const {
+        events,
+        enableScroll,
+        direction,
+        cardType = "responsive",
+        onEventCardClick
+    } = props;
     const isMobile = useMediaQuery('(max-width:600px)');
+
+    const Card = ({event}: {event: IEvent}) => {
+        if (cardType === "responsive") {
+            return isMobile ? <EventCard event={event} onCardClick={onEventCardClick}/> : <WideEventCard event={event} onCardClick={onEventCardClick}/>
+        } else if (cardType === "normal") {
+            return <EventCard event={event} onCardClick={onEventCardClick}/>
+        } else {
+            return <WideEventCard event={event} onCardClick={onEventCardClick}/>
+        }
+    }
 
     return (<List
         sx={{
@@ -38,7 +55,7 @@ export const EventList = (props: IEventListProps) => {
                         justifyContent: "center"
                     }}
                 >
-                    {isMobile ? <EventCard event={event} onCardClick={onEventCardClick}/> : <WideEventCard event={event} onCardClick={onEventCardClick}/>}
+                    <Card event={event}/>
                 </ListItem>
             )
         })}

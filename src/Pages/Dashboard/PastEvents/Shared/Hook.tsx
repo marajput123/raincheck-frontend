@@ -12,7 +12,7 @@ export const useCustomInfiniteQuery = <T extends any>(queryKey: string | string[
   );
 
   const onInfiniteTrigger = (observers: IntersectionObserverEntry[]) => {
-    const isScrollEnd = !query.data?.pages[0]?.metadata?.totalCount || (pageRef.current * 10) >= query.data?.pages[0]?.metadata?.totalCount;
+    const isScrollEnd = (pageRef.current * 10) >= query.data?.pages[0]?.metadata?.totalCount
     if (!observerInView(observers) || isScrollEnd) {
       return;
     }

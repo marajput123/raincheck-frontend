@@ -1,4 +1,4 @@
-import { Card, List, ListItem, Skeleton, Stack, SxProps, TextField, Typography } from "@mui/material";
+import { Card, List, ListItem, Skeleton, Stack, SxProps, Typography } from "@mui/material";
 import React, { useMemo } from "react"
 import { useParams } from "react-router-dom";
 import { AvatarGroup } from "src/Shared/Components/AvatarGroup";
@@ -32,9 +32,6 @@ export const MemberPanel = () => {
         <Typography variant="h6">Who's going</Typography>
         {authState.isAuthenticated ?
           <>
-            <Stack>
-              <TextField disabled label="Search by name"></TextField>
-            </Stack>
             <List sx={{ height: "500px", overflowY: "auto" }}>
               {membersQuery.data?.content.map((member, index) => (
                 <React.Fragment key={member.username + index}>

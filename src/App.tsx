@@ -14,12 +14,15 @@ import { VerifyPage } from './Pages/Verify/VerifyPage';
 import { CreateEventForm } from './Pages/Dashboard/CreateEvent';
 import { Dashboard } from './Pages/Dashboard';
 import { UpcomingEvents } from './Pages/Dashboard/UpcomingEvents';
+import { PastEvents } from './Pages/Dashboard/PastEvents';
 import { EventPage } from './Pages/Event';
 import { ExplorePage } from 'src/Pages/Explore';
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from './Shared/ReactQuery';
 import { RootLayout } from './Shared/Components/RootLayout';
 import { PublicRoute } from './Shared/Components/Routes/PublicRoute';
+import { ExploreEvents } from './Pages/Explore/ExploreEvents';
+import { SearchEvents } from './Pages/Explore/SearchEvents';
 
 const App = () => {
   const auth = useAppSelector(state => state.auth)
@@ -64,7 +67,10 @@ const App = () => {
                     <Route path="pastEvents" element={<PastEvents />} />
                   </Route>
                   <Route path="/" element={<PublicRoute />}>
-                    <Route index element={<ExplorePage />} />
+                    <Route path="/" element={<ExplorePage />}>
+                      <Route index element={<ExploreEvents />}/>
+                      <Route path="/search" element={<SearchEvents/>}/>
+                    </Route>
                     <Route path="events/:id" element={<EventPage />}></Route>
                   </Route>
                 </Routes>
@@ -77,6 +83,5 @@ const App = () => {
   );
 };
 
-const PastEvents = () => <>Past events</>;
 
 export default App;

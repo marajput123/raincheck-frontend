@@ -2,6 +2,7 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
+    xxs: true;
     xs: true; // removes the `xs` breakpoint
     sm: true;
     md: true;
@@ -14,7 +15,8 @@ declare module '@mui/material/styles' {
 let lightTheme = createTheme({
   breakpoints: {
     values: {
-      xs: 0,
+      xxs: 0,
+      xs: 460,
       sm: 600,
       md: 800,
       lg: 1000,
@@ -41,7 +43,8 @@ let lightTheme = createTheme({
 let darkTheme = createTheme({
   breakpoints: {
     values: {
-      xs: 0,
+      xxs: 0,
+      xs: 460,
       sm: 600,
       md: 800,
       lg: 1000,

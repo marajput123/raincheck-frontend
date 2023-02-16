@@ -95,7 +95,7 @@ export const AutocompleteDropdown = (props: IAutocompleteDropdownProps) => {
       renderInput={(params) => (
         props.renderInput ?
           props.renderInput(params) :
-          <TextField {...params} onChange={(e) => onInputChange(e.target.value)} label="Address/City/Location" variant="standard" />
+          <TextField {...params} onChange={(e) => onInputChange(e.target.value)} placeholder="Address/City/Location" variant="outlined" />
       )}
     />
   )

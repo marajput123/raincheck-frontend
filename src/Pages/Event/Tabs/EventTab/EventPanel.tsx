@@ -27,7 +27,7 @@ export const EventPanel = () => {
   const imageUri = useMemo(() => event?.imageUri || randomImage(), [event?.imageUri]);
   const date = useMemo(() => moment(event?.date).format('MMM DD, YYYY'), [event?.date])
   const time = useMemo(() => moment(event?.date).format('hh:mm A'), [event?.date])
-  const description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident corporis fuga iure cum accusamus quibusdam quisquam vitae pariatur deleniti ducimus incidunt est doloribus similique exercitationem atque eveniet at, labore ex!";
+  const description = event?.description
   const organizer = event?.organizers[0] as IUser
   const username = `@${organizer?.username}`;
   const name = `${organizer?.firstName} ${organizer?.lastName}`;
@@ -68,6 +68,7 @@ export const EventPanel = () => {
         </Stack>
         {isCardOpen &&
           <Stack>
+            <Typography variant="h6">Description</Typography>
             <Typography>{description}</Typography>
           </Stack>
         }

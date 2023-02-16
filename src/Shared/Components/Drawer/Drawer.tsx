@@ -8,7 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Fade, Stack, Toolbar } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useAppDispatch } from 'src/Shared/Redux/Store';
+import { useAppDispatch, useAppSelector } from 'src/Shared/Redux/Store';
 import { logoutAction } from 'src/Shared/Redux/AuthSlice/Actions';
 import { AvatarGroup } from 'src/Shared/Components/AvatarGroup';
 import { drawerMenuItems, MenuItemKeys } from 'src/Shared/NavigationItems';
@@ -19,6 +19,7 @@ import { StyledDrawer, StyledSwipeableDrawer } from 'src/Shared/Components/Drawe
 const imagesrc = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
 
 export const PersistentDrawer = () => {
+  const userState = useAppSelector(state => state.userAccount.user)
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
@@ -69,8 +70,8 @@ export const PersistentDrawer = () => {
           <List sx={{ padding: "15px 10px" }}>
             <AvatarGroup
               imageuri={imagesrc}
-              name="Muhammad Rajput"
-              username='@coolio'
+              name={`${userState.firstName} ${userState.lastName}`}
+              username={`@${userState.username}`}
               userInfoContainerStyles={{ opacity: open ? 1 : 0 }}
             />
             <MenuItem
@@ -88,7 +89,9 @@ export const PersistentDrawer = () => {
 }
 
 export const SwipeableTemporaryDrawer = () => {
-  const [state, setState] = useState(false);
+  const userState = useAppSelector(state => state.userAccount.user)
+
+  const [open, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
@@ -102,7 +105,7 @@ export const SwipeableTemporaryDrawer = () => {
     dispatch(logoutAction())
   }
 
-  const toggle = () => setState(!state)
+  const toggle = () => setIsOpen(!open)
 
   return (
     <>
@@ -111,14 +114,14 @@ export const SwipeableTemporaryDrawer = () => {
           <MenuIcon />
         </IconButton>
       </Toolbar>
-      <StyledSwipeableDrawer anchor='left' open={state} onOpen={toggle} onClose={toggle} sx={{ width: "280px" }}>
+      <StyledSwipeableDrawer anchor='left' open={open} onOpen={toggle} onClose={toggle} sx={{ width: "280px" }}>
         <Stack
           direction="row"
           justifyContent="flex-end"
           alignItems="center"
           sx={{ padding: "10px 10px 16px 10px", height: "50px" }}
         >
-          <Fade in={state} unmountOnExit>
+          <Fade in={open} unmountOnExit>
             <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
               <img style={{ height: "50px", width: "50px" }} src={process.env.PUBLIC_URL + '/LOGO.png'} alt="logo" />
             </Box>
@@ -141,8 +144,8 @@ export const SwipeableTemporaryDrawer = () => {
           <List sx={{ padding: "15px 10px" }}>
             <AvatarGroup
               imageuri={imagesrc}
-              name="Muhammad Rajput"
-              username='@coolio'
+              name={`${userState.firstName} ${userState.lastName}`}
+              username={`@${userState.username}`}
             />
             <SwipableMenuItem
               label={"Logout"}

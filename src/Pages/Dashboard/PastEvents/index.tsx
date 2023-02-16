@@ -5,8 +5,7 @@ import { AllEvents } from "./AllEvents";
 import { AttendingEvents } from "./AttendingEvents";
 import { OrganizingEvents } from "./OrganizingEvents";
 
-// TODO: Optimize upcoming events and past events into one shared component
-export const UpcomingEvents = () => {
+export const PastEvents = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

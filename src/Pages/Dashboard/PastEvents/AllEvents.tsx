@@ -7,15 +7,14 @@ import { fetchMyEvents } from "src/Shared/Api/Event";
 import { InfinitLoaderTrigger } from "src/Shared/Components/InfiniteLoader";
 import { useCustomInfiniteQuery } from "src/Pages/Dashboard/UpcomingEvents/Shared/Hook";
 import { Spinner } from "src/Shared/Components/Spinner";
-import Typography from "@mui/material/Typography/Typography";
 
 
 // TODO: Refactor the tabs in UpcomgingEvents as their functioanlity is extremely similar
 export const AllEvents = () => {
   const navigate = useCustomNavigate();
-  const { isLoading, error, data, onInfiniteTrigger } = useCustomInfiniteQuery(
-    "EventListInifinite/FetchMyUpcomingEvents",
-    ({ pageParam = 1 }) => fetchMyEvents({ page: pageParam - 1, "startDate[$gte]": new Date().toISOString() })
+  const {isLoading, error, data, onInfiniteTrigger} = useCustomInfiniteQuery(
+    "EventListInifinite/FetchMyPastEvents",
+    ({ pageParam = 1 }) => fetchMyEvents({ page: pageParam - 1,  "startDate[$lte]": new Date().toISOString() })
   );
 
   const onEventCardClick = (e: React.SyntheticEvent, event: IEvent) => {
@@ -23,28 +22,21 @@ export const AllEvents = () => {
   }
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner/>
   }
 
   if (error) {
     return <p>error</p>
-  };
+  }
 
   return (
     <Stack alignItems={"center"}>
-      {data?.pages?.map((page, index) => {
-        if (page.content.length === 0) {
-          return null;
-        }
-        return (<React.Fragment key={index}>
+      {data?.pages?.map((page, index) => (
+        <React.Fragment key={index}>
           <EventList events={page.content} onEventCardClick={onEventCardClick} />
-        </React.Fragment>)
-      })}
+        </React.Fragment>
+      ))}
       <InfinitLoaderTrigger onTriggerCallback={onInfiniteTrigger} />
-      {
-        data?.pages[0].content.length === 0 &&
-        <Typography>No upcoming events</Typography>
-      }
     </Stack>
   )
 }
