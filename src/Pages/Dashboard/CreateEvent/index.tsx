@@ -77,8 +77,8 @@ export const CreateEventForm = () => {
         });
       const event = response.data.content;
       console.log(event);
-      /* setEventUrl(`www.soshalup.com/app/events/${event._id}`);
-       * navigate(`/events/${event._id}`); */
+      setEventUrl(`www.soshalup.com/app/events/${event._id}`);
+      navigate(`/events/${event._id}`);
     } catch (error) {
       console.log(error);
     }
