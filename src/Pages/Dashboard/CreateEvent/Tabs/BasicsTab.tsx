@@ -8,6 +8,8 @@ import { LocalizationProvider, MobileDateTimePicker } from "@mui/x-date-pickers"
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Controller } from "react-hook-form";
 import { ICreateFormTab } from "src/Pages/Dashboard/CreateEvent";
+import { AutocompleteDropdown } from "src/Shared/Components/AutocompleteDropdown";
+import { geocodeLocation } from "src/Shared/Api/GoogleMaps/GoogleGeocode";
 
 const BasicsTab = (props: ICreateFormTab) => {
   const { control, getValues, setValue, watch, formState: { errors } } = props.form;
@@ -34,7 +36,7 @@ const BasicsTab = (props: ICreateFormTab) => {
         )}
       />
       <Controller
-        name="date"
+        name="startDate"
         control={control}
         defaultValue=""
         rules={{ required: "Please select a time and date" }}
@@ -50,8 +52,8 @@ const BasicsTab = (props: ICreateFormTab) => {
                   label="Date & Time"
                   variant="outlined"
                   fullWidth
-                  error={!!errors.date?.message}
-                  helperText={errors.date?.message}
+                  error={!!errors.startDate?.message}
+                  helperText={errors.startDate?.message}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -71,10 +73,10 @@ const BasicsTab = (props: ICreateFormTab) => {
           row
           sx={{ display: 'flex', justifyContent: 'space-between' }}
           aria-labelledby="location-label"
-          name="location"
-          value={watch('location')}
+          name="where"
+          value={watch('where')}
           onChange={(event: any) => {
-            setValue('location', event.target.value);
+            setValue('where', event.target.value);
           }}
         >
           <FormControlLabel value="address" control={<Radio />} label="Address" />
@@ -82,25 +84,30 @@ const BasicsTab = (props: ICreateFormTab) => {
           <FormControlLabel value="tba" control={<Radio />} label="TBA" />
         </RadioGroup>
       </FormControl>
-      <div hidden={watch('location') !== "address"}>
+      <div hidden={watch('where') !== "address"}>
         <Controller
           name="address"
           defaultValue=""
           control={control}
           rules={{ required: "Please enter event location" }}
           render={({ field }) => (
-            <TextField
-              {...field}
-              label="Address"
-              variant="outlined"
-              fullWidth
-              error={!!errors.address?.message}
-              helperText={errors.address?.message}
+            <AutocompleteDropdown
+              onClickDropdownOption={async (_, __, option) => {
+                setValue('address', option.address);
+                const geocodeResponse = await geocodeLocation({ address: option.address });
+                const { lat, lng }  = geocodeResponse[0].geometry.location;
+                setValue('location', {
+                  type: "Point",
+                  coordinates: [lng(), lat()]
+                });
+                console.log(props.form.getValues("address"));
+                console.log(props.form.getValues("location"));
+              }}
             />
           )}
         />
       </div>
-      <div hidden={watch('location') !== "virtual"}>
+      <div hidden={watch('where') !== "virtual"}>
         <Controller
           name="link"
           defaultValue=""

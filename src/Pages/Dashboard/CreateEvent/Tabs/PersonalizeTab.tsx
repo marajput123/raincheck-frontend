@@ -31,22 +31,42 @@ const PersonalizeTab = (props: ICreateFormTab) => {
         )}
       />
       <FormControl>
-        <FormLabel id="private-label">Is your event public or private?</FormLabel>
+        <FormLabel id="isPrivate-label">Is your event public or private?</FormLabel>
         <RadioGroup
           row
           sx={{ display: 'flex' }}
-          aria-labelledby="private-label"
-          name="private"
-          value={watch('private')}
+          aria-labelledby="isPrivate-label"
+          name="isPrivate"
+          value={watch('isPrivate')}
           onChange={(event: any) => {
-            setValue('private', event.target.value);
+            setValue('isPrivate', event.target.value);
           }}
         >
           <FormControlLabel value="false" control={<Radio />} label="Public" />
           <FormControlLabel value="true" control={<Radio />} label="Private" />
         </RadioGroup>
       </FormControl>
-      <Button variant="contained" startIcon={<AddPhotoAlternateIcon />}>Upload Image</Button>
+      <Controller
+        name="image"
+        defaultValue=""
+        control={control}
+        render={({ field }) => (
+          <Button
+            variant="contained"
+            startIcon={<AddPhotoAlternateIcon />}
+            component="label"
+          >
+            Upload Image
+            <input
+              type="file"
+              onChange={(event: any) => {
+                setValue('image', event.target.files[0]);
+              }}
+              hidden
+            />
+          </Button>
+        )}
+      />
       {/* <FormControlLabel
           control={
           <Controller

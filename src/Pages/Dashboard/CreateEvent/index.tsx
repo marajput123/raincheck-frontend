@@ -18,13 +18,18 @@ const stackStyle: SxProps = {
 
 export interface ICreateEventFormData {
   name: string;
-  date: string;
+  startDate: string;
+  endDate: string;
   description: string;
-  location: string;
+  where: string;
+  location: {
+    type: string,
+    coordinates: number[]
+  };
   address: string;
   link: string;
-  imageUri: string;
-  private: boolean;
+  image: string;
+  isPrivate: boolean;
 }
 
 export interface ICreateFormTab {
@@ -42,8 +47,8 @@ export const CreateEventForm = () => {
 
   const form = useForm<ICreateEventFormData>({
     defaultValues: {
-      location: "address",
-      private: false
+      where: "address",
+      isPrivate: false
     },
     mode: 'all'
   });
@@ -52,19 +57,28 @@ export const CreateEventForm = () => {
 
   const createEvent = async (data: ICreateEventFormData) => {
 
-    const { location, address } = data;
-    if (location === "address") {
-      data.location = address;
-    }
+    const formData = new FormData();
+    formData.append('name', data.name)
+    formData.append('startDate', data.startDate)
+    formData.append('endDate', data.endDate)
+    formData.append('description', data.description)
+    formData.append('location', JSON.stringify(data.location))
+    formData.append('address', data.address)
+    formData.append('link', data.link)
+    formData.append('image', data.image)
+    formData.append('isPrivate', JSON.stringify(data.isPrivate))
 
     try {
-      ;
       const response = await axiosInstance
-        .post("/events", data);
+        .post("/events", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
       const event = response.data.content;
       console.log(event);
-      setEventUrl(`www.soshalup.com/app/events/${event._id}`);
-      navigate(`/events/${event._id}`);
+      /* setEventUrl(`www.soshalup.com/app/events/${event._id}`);
+       * navigate(`/events/${event._id}`); */
     } catch (error) {
       console.log(error);
     }
@@ -79,12 +93,14 @@ export const CreateEventForm = () => {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
+    /* const geolocation = await geocodeLocation({ address: "108 Old Maple Lane" });
+     * console.log(geolocation); */
 
     if (activeStep === 2) {
       setShowLoader(true);

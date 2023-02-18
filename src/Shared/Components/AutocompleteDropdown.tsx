@@ -80,8 +80,7 @@ export const AutocompleteDropdown = (props: IAutocompleteDropdownProps) => {
       noOptionsText={address.length > 5 ? "Please enter correct address" : address.length === 0 ? "Start typing..." : "Please be more specific"}
       sx={{...props.sx}}
       renderOption={(_props, option) => (
-        props.renderOption ?
-          props.renderOption(_props, option) :
+        props.renderOption ? props.renderOption(_props, option) :
           (
             <li {..._props} onClick={(event) => onOptionClick(_props, event, option)} key={option.key}>
               <Stack>
@@ -93,9 +92,14 @@ export const AutocompleteDropdown = (props: IAutocompleteDropdownProps) => {
           )
       )}
       renderInput={(params) => (
-        props.renderInput ?
-          props.renderInput(params) :
-          <TextField {...params} onChange={(e) => onInputChange(e.target.value)} placeholder="Address/City/Location" variant="outlined" />
+        props.renderInput ? props.renderInput(params) :
+          <TextField
+            {...params}
+            onChange={(e) => onInputChange(e.target.value)}
+            label="Address"
+            variant="outlined"
+            fullWidth
+          />
       )}
     />
   )
