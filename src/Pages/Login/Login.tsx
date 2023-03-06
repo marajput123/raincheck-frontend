@@ -31,8 +31,8 @@ const Login = () => {
 
     const { handleSubmit, control, formState: { errors, } } = useForm<IFormData>({
         defaultValues: {
-            email: "omar.h@myyahoo.com",
-            password: "Test123!",
+            email: "",
+            password: "!",
             staySignedIn: false
         },
         shouldFocusError: true
@@ -46,8 +46,8 @@ const Login = () => {
             if (action) {
                 onNavigate("/")
             }
+            // TODO: Fix error type
         } catch (err: any) {
-            console.log(err)
             if (err.error && err?.error?.length !== 0) {
                 if (err.error[0].type === ServerErrorTypes.ACCOUNT_UNCONFIRMED) {
                     onNavigate(`/auth/verify?username=${email}`)

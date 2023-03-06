@@ -24,7 +24,6 @@ export const VerifyPage = () => {
   const username = searchParams.get("username");
 
   useEffect(() => {
-    console.log(searchParams.get("username"))
     if (!username) {
       onNavigate("/auth/login")
     }

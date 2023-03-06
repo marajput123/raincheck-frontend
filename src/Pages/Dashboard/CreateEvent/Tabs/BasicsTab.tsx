@@ -100,8 +100,6 @@ const BasicsTab = (props: ICreateFormTab) => {
                   type: "Point",
                   coordinates: [lng(), lat()]
                 });
-                console.log(props.form.getValues("address"));
-                console.log(props.form.getValues("location"));
               }}
             />
           )}

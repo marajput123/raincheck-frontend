@@ -41,11 +41,6 @@ const AuthSlice = createSlice({
       // state.isAuthenticated = true;
       // state.user = action.payload;
     })
-    .addCase(SignUpAction.rejected, (state, action) => {
-        console.log("here")
-      // state.isAuthenticated = true;
-      // state.user = action.payload;
-    })
   }
 });
 

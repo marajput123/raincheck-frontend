@@ -8,36 +8,37 @@ import { logoutAction } from '../Redux/AuthSlice/Actions';
 
 
 export default function Navbar() {
-    const auth = useAppSelector(state => state.auth);
-    const dispatch = useAppDispatch();
-    const navigate = useCustomNavigate();
+  const auth = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useCustomNavigate();
 
-    const onNavigate = async (route: string) => {
-        navigate(route);
+  const onNavigate = async (route: string) => {
+    navigate(route);
+  }
+
+  const onLogout = async () => {
+    try {
+      await dispatch(logoutAction())
+    } catch (error) {
+      // TODO: Throw notification
+      console.log(error)
     }
+  }
 
-    const onLogout = async () => {
-        try {
-            await dispatch(logoutAction())
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    return (
-            <Toolbar>
-                <Typography onClick={() => { onNavigate("/") }} variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }}>
-                    tmp-product
-                </Typography>
-                {auth.isAuthenticated ?
-                    <>
-                        <Button onClick={() => onLogout()}>Log out</Button>
-                    </> :
-                    <>
-                        <Button onClick={() => onNavigate("/auth/login")} >Log in</Button>
-                        <Button onClick={() => onNavigate("/auth/sign-up")}>Sign Up</Button>
-                    </>
-                }
-            </Toolbar>
-    );
+  return (
+    <Toolbar>
+      <Typography onClick={() => { onNavigate("/") }} variant="h5" component="div" sx={{ flexGrow: 1, cursor: 'pointer', fontFamily: "Frijole", fontSize: "30px" }}>
+        Evntful
+      </Typography>
+      {auth.isAuthenticated ?
+        <>
+          <Button onClick={() => onLogout()}>Log out</Button>
+        </> :
+        <>
+          <Button onClick={() => onNavigate("/auth/login")} >Log in</Button>
+          <Button onClick={() => onNavigate("/auth/sign-up")}>Sign Up</Button>
+        </>
+      }
+    </Toolbar>
+  );
 }

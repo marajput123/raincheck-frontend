@@ -148,7 +148,6 @@ const RandomEvents = () => {
       "startDate[$gte]": moment(new Date).format("YYYY-MM-DD")
     })
 
-    console.log(uri)
     navigate(uri)
   }
 
