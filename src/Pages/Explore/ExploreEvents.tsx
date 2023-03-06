@@ -126,10 +126,11 @@ export const NearbyEvents = (props: INearbyEventsProps) => {
           <GridEventList events={data.content || []} /> :
           <Typography>No Events</Typography>
         :
-        <Stack sx={{ width: "100%" }} alignItems="center">
-          <img style={{ maxHeight: "100px" }} src={errorSVG} />
-          <Typography variant="h5">Huh, something went wrong</Typography>
-        </Stack>
+        <>Error</>
+        // <Stack sx={{ width: "100%" }} alignItems="center">
+        //   <img style={{ maxHeight: "100px" }} src={errorSVG} />
+        //   <Typography variant="h5">Huh, something went wrong</Typography>
+        // </Stack>
       }
     </Stack>
   )
@@ -172,10 +173,11 @@ const RandomEvents = () => {
           <GridEventList events={data.content || []} /> :
           <Typography>No Events</Typography>
         :
-        <Stack sx={{ width: "100%" }} alignItems="center">
-          <img style={{ maxHeight: "100px" }} src={errorSVG} />
-          <Typography variant="h5">Huh, something went wrong</Typography>
-        </Stack>
+        <>Error</>
+        // <Stack sx={{ width: "100%" }} alignItems="center">
+        //   <img style={{ maxHeight: "100px" }} src={errorSVG} />
+        //   <Typography variant="h5">Huh, something went wrong</Typography>
+        // </Stack>
       }
 
     </Stack>
@@ -210,10 +212,11 @@ const MyEvents = () => {
           <GridEventList events={data.content || []} /> :
           <Typography>No Events</Typography>
         :
-        <Stack sx={{ width: "100%" }} alignItems="center">
-          <img style={{ maxHeight: "100px" }} src={errorSVG} />
-          <Typography variant="h5">Huh, something went wrong</Typography>
-        </Stack>
+        <>Error</>
+        // <Stack sx={{ width: "100%" }} alignItems="center">
+        //   <img style={{ maxHeight: "100px" }} src={errorSVG} />
+        //   <Typography variant="h5">Huh, something went wrong</Typography>
+        // </Stack>
       }
 
     </Stack>
