@@ -122,15 +122,14 @@ export const NearbyEvents = (props: INearbyEventsProps) => {
         <StyledLink onClick={onSearchNearby}>See more</StyledLink>
       </Stack>
       {!error ?
-        data.content.length !== 0 ?
-          <GridEventList events={data.content || []} /> :
+        data?.content.length !== 0 ?
+          <GridEventList events={data?.content || []} /> :
           <Typography>No Events</Typography>
         :
-        <>Error</>
-        // <Stack sx={{ width: "100%" }} alignItems="center">
-        //   <img style={{ maxHeight: "100px" }} src={errorSVG} />
-        //   <Typography variant="h5">Huh, something went wrong</Typography>
-        // </Stack>
+        <Stack sx={{ width: "100%" }} alignItems="center">
+          <img style={{ maxHeight: "100px" }} src={errorSVG} />
+          <Typography variant="h5">Huh, something went wrong</Typography>
+        </Stack>
       }
     </Stack>
   )
@@ -169,15 +168,14 @@ const RandomEvents = () => {
         <StyledLink onClick={onSearchRandom}>See more</StyledLink>
       </Stack>
       {!error ?
-        data.content.length !== 0 ?
-          <GridEventList events={data.content || []} /> :
+        data?.content.length !== 0 ?
+          <GridEventList events={data?.content || []} /> :
           <Typography>No Events</Typography>
         :
-        <>Error</>
-        // <Stack sx={{ width: "100%" }} alignItems="center">
-        //   <img style={{ maxHeight: "100px" }} src={errorSVG} />
-        //   <Typography variant="h5">Huh, something went wrong</Typography>
-        // </Stack>
+        <Stack sx={{ width: "100%" }} alignItems="center">
+          <img style={{ maxHeight: "100px" }} src={errorSVG} />
+          <Typography variant="h5">Huh, something went wrong</Typography>
+        </Stack>
       }
 
     </Stack>
@@ -208,15 +206,14 @@ const MyEvents = () => {
         <StyledLink onClick={toMyEvents}>See more</StyledLink>
       </Stack>
       {!error ?
-        data.content.length !== 0 ?
-          <GridEventList events={data.content || []} /> :
+        data?.content.length !== 0 ?
+          <GridEventList events={data?.content || []} /> :
           <Typography>No Events</Typography>
         :
-        <>Error</>
-        // <Stack sx={{ width: "100%" }} alignItems="center">
-        //   <img style={{ maxHeight: "100px" }} src={errorSVG} />
-        //   <Typography variant="h5">Huh, something went wrong</Typography>
-        // </Stack>
+        <Stack sx={{ width: "100%" }} alignItems="center">
+          <img style={{ maxHeight: "100px" }} src={errorSVG} />
+          <Typography variant="h5">Huh, something went wrong</Typography>
+        </Stack>
       }
 
     </Stack>
