@@ -16,10 +16,10 @@ export const ProfilePage = () => {
   return (
     <Container>
       <Stack sx={rootStackStyle} alignItems="center">
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", maxWidth: "500px" }}>
           <img src={comingSoon} />
         </Box>
-        <Typography variant='h3' sx={{fontWeight: 600}}>Coming soon 🚀</Typography>
+        <Typography variant='h3' sx={{ fontWeight: 600 }}>Coming soon 🚀</Typography>
       </Stack>
     </Container>
   );

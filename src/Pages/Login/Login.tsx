@@ -91,6 +91,7 @@ const Login = () => {
                     render={({ field }) => (
                         <TextField
                             {...field}
+                            type="password"
                             label={"Password"}
                             error={!(!errors.password?.message)}
                             helperText={errors.password?.message}

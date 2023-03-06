@@ -2,7 +2,8 @@ import axios from "axios";
 import { accessTokenHeaderName } from "src/Shared/Contants";
 import { getAccessTokenFromStorage, getContentFromLocalStorage, setAuthInStorage } from "../Helpers";
 
-const BASE_URL = "http://localhost:4000"
+
+const BASE_URL = process.env.REACT_APP_ENV === "PROD" ? process.env.REACT_APP_SERVER : process.env.REACT_APP_LOCAL
 
 export const axiosInstance = axios.create({
   baseURL:BASE_URL,
