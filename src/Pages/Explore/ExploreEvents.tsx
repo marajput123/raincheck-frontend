@@ -14,6 +14,8 @@ import { StyledLink } from "src/Shared/Components/Link";
 import { useCustomNavigate } from "src/Shared/Hooks/useCustomNavigate";
 import { useCustomSearchParams } from "src/Shared/Hooks/useCustomSearchParams";
 import moment from "moment";
+import errorSVG from "src/Shared/Svg/error.svg";
+
 
 export const ExploreEvents = () => {
   const authState = useAppSelector((state) => state.auth)
@@ -99,7 +101,7 @@ export const NearbyEvents = (props: INearbyEventsProps) => {
   const { latitude, longitude } = props;
   const navigate = useCustomNavigate();
 
-  const { isLoading, data } = useQuery("EventList/FetchNearbyEvents", () => fetchPublicEvents({ limit: 4, lat: latitude, long: longitude }))
+  const { isLoading, data, error } = useQuery("EventList/FetchNearbyEvents", () => fetchPublicEvents({ limit: 4, lat: latitude, long: longitude }))
 
   if (isLoading) {
     return (
@@ -116,12 +118,18 @@ export const NearbyEvents = (props: INearbyEventsProps) => {
   return (
     <Stack sx={{ width: "100%" }}>
       <Stack direction="row" justifyContent={"space-between"} alignItems="center">
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>Nearby events</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 600 }}>Nearby events</Typography>
         <StyledLink onClick={onSearchNearby}>See more</StyledLink>
       </Stack>
-      {data.content.length !== 0 ?
-        <GridEventList events={data.content || []} /> :
-        <Typography>No Events</Typography>
+      {!error ?
+        data.content.length !== 0 ?
+          <GridEventList events={data.content || []} /> :
+          <Typography>No Events</Typography>
+        :
+        <Stack sx={{ width: "100%" }} alignItems="center">
+          <img style={{ maxHeight: "100px" }} src={errorSVG} />
+          <Typography variant="h5">Huh, something went wrong</Typography>
+        </Stack>
       }
     </Stack>
   )
@@ -130,44 +138,57 @@ export const NearbyEvents = (props: INearbyEventsProps) => {
 
 
 const RandomEvents = () => {
-  const { isLoading, data } = useQuery("EventList/SearchPublicEvents", () => fetchPublicEvents({ limit: 4 }));
+  const { isLoading, data, error } = useQuery("EventList/SearchPublicEvents", () => fetchPublicEvents({ limit: 4 }));
   const { constructUri } = useCustomSearchParams()
   const navigate = useCustomNavigate();
 
-  if (isLoading) {
-    return (
-      <Container sx={{ height: "80vh" }}>
-        <Spinner />
-      </Container>
-    )
-  }
+
 
   const onSearchRandom = () => {
     const uri = constructUri("/search", {
-      _searchLabel:"Random",
+      _searchLabel: "Random",
       "startDate[$gte]": moment(new Date).format("YYYY-MM-DD")
     })
 
     navigate(uri)
   }
 
+  if (isLoading) {
+    return (
+      <Container sx={{ height: "80vh" }}>
+        <Spinner />
+      </Container>
+    )
+  }
+
   return (
     <Stack sx={{ width: "100%" }}>
       <Stack direction="row" justifyContent={"space-between"} alignItems="center">
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>Random events</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 600 }}>Random events</Typography>
         <StyledLink onClick={onSearchRandom}>See more</StyledLink>
       </Stack>
-      {data.content.length !== 0 ?
-        <GridEventList events={data.content || []} /> :
-        <Typography>No Events</Typography>
+      {!error ?
+        data.content.length !== 0 ?
+          <GridEventList events={data.content || []} /> :
+          <Typography>No Events</Typography>
+        :
+        <Stack sx={{ width: "100%" }} alignItems="center">
+          <img style={{ maxHeight: "100px" }} src={errorSVG} />
+          <Typography variant="h5">Huh, something went wrong</Typography>
+        </Stack>
       }
+
     </Stack>
   )
 }
 
 const MyEvents = () => {
-  const { isLoading, data } = useQueryMyEvents({ limit: 4 });
+  const { isLoading, data, error } = useQueryMyEvents({ limit: 4 });
   const navigate = useCustomNavigate();
+
+  const toMyEvents = () => {
+    navigate("/app/events")
+  }
 
 
   if (isLoading) {
@@ -178,17 +199,23 @@ const MyEvents = () => {
     )
   }
 
-  const toMyEvents = () => {
-    navigate("/app/events")
-  }
-
   return (
     <Stack sx={{ width: "100%" }}>
       <Stack direction="row" justifyContent={"space-between"} alignItems="center">
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>My events</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 600 }}>My events</Typography>
         <StyledLink onClick={toMyEvents}>See more</StyledLink>
       </Stack>
-      <GridEventList events={data.content || []} />
+      {!error ?
+        data.content.length !== 0 ?
+          <GridEventList events={data.content || []} /> :
+          <Typography>No Events</Typography>
+        :
+        <Stack sx={{ width: "100%" }} alignItems="center">
+          <img style={{ maxHeight: "100px" }} src={errorSVG} />
+          <Typography variant="h5">Huh, something went wrong</Typography>
+        </Stack>
+      }
+
     </Stack>
   )
 }

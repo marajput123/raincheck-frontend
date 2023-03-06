@@ -32,7 +32,7 @@ const Login = () => {
     const { handleSubmit, control, formState: { errors, } } = useForm<IFormData>({
         defaultValues: {
             email: "",
-            password: "!",
+            password: "",
             staySignedIn: false
         },
         shouldFocusError: true

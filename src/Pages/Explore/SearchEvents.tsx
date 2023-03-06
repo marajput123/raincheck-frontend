@@ -190,7 +190,7 @@ export const SearchPanel = () => {
     return (<Box sx={{width: "100%"}}><Spinner/></Box>);
   }
 
-  if (!error) {
+  if (error) {
     return (
       <Stack sx={{width: "100%"}} alignItems="center">
         <img style={{ maxHeight: "500px" }} src={errorSVG} />
