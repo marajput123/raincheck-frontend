@@ -3,7 +3,7 @@ import { accessTokenHeaderName } from "src/Shared/Contants";
 import { getAccessTokenFromStorage, getContentFromLocalStorage, setAuthInStorage } from "../Helpers";
 
 
-const BASE_URL = process.env.REACT_APP_ENV === "PROD" ? process.env.REACT_APP_SERVER : process.env.REACT_APP_LOCAL
+const BASE_URL = "http://15.204.199.113:4000"
 
 export const axiosInstance = axios.create({
   baseURL:BASE_URL,
