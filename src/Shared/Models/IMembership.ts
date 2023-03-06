@@ -1,5 +1,5 @@
-import { IEvent } from "./IEvent";
-import { IUser } from "./IUser";
+import { IEvent } from "./Event/IEvent";
+import { IUser } from "./User/IUser";
 
 export interface IMembership {
     _id: string;
@@ -8,7 +8,6 @@ export interface IMembership {
     event: IEvent | string;
     user: IUser | string;
 }
-
 
 export interface IMembershipCheck {
     isMember: boolean;

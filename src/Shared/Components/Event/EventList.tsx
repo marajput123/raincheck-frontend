@@ -1,5 +1,5 @@
 import { List, ListItem, useMediaQuery } from "@mui/material";
-import { IEvent } from "../../Models/IEvent"
+import { IEvent } from "../../Models/Event/IEvent"
 import { EventCard, WideEventCard } from "./EventCard";
 
 /**
@@ -48,9 +48,9 @@ export const EventList = (props: IEventListProps) => {
                 <ListItem
                     key={event._id + index}
                     sx={{
-                        maxWidth: "600px",
+                        maxWidth: "700px",
                         width: "100%",
-                        padding: "10px 16px 25px 16px",
+                        padding: "5px 16px 5px 16px",
                         display: "flex",
                         justifyContent: "center"
                     }}

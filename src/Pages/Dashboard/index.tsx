@@ -13,7 +13,6 @@ export const Dashboard = () => {
   return (
     <Box sx={{display: !isMobile ? "flex" : "block"}}>
       <Drawer/>
-      <CreateEventSpeedDial />
       <Stack sx={{ width: "100%" }}>
         <Outlet />
       </Stack>

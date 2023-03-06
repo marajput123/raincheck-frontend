@@ -1,6 +1,6 @@
 import axios from "axios";
 import { accessTokenHeaderName } from "src/Shared/Contants";
-import { getAccessTokenFromStorage, getContentFromLocalStorage, setAuthInStorage } from "../HelperMethods";
+import { getAccessTokenFromStorage, getContentFromLocalStorage, setAuthInStorage } from "../Helpers";
 
 const BASE_URL = "http://localhost:4000"
 

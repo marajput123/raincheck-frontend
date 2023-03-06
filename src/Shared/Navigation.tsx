@@ -4,8 +4,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 export enum MenuItemKeys {
   explore = "explore",
-  upcomingEvents = "upcomingEvents",
-  pastEvents = "pastEvents",
+  events = "events",
   logout = "logout"
 }
 
@@ -26,17 +25,10 @@ export const drawerMenuItems: IDrawerMenuItem[] = [
     icon: <ExploreIcon sx={{ color: "black" }} />
   },
   {
-    key: MenuItemKeys.upcomingEvents,
-    label: "Upcoming events",
-    to: "/app/upcomingEvents",
-    highlightOnPath: "/app/upcomingEvents",
+    key: MenuItemKeys.events,
+    label: "Events",
+    to: "/app/events",
+    highlightOnPath: "/app/events",
     icon: <CalendarTodayIcon sx={{ color: "black" }} />
-  },
-  {
-    key: MenuItemKeys.pastEvents,
-    label: "Past events",
-    to: "/app/pastEvents",
-    highlightOnPath: "/app/pastEvents",
-    icon: <CalendarMonthIcon sx={{ color: "black" }} />
   },
 ]

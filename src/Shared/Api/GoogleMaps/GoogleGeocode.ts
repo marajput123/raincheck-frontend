@@ -10,3 +10,15 @@ export const geocodeLocation = async (request: google.maps.GeocoderRequest) => {
       })
     })
 };
+
+export const getCoordinates = async (address: string) => {
+  try {
+    const geoLocaion = await geocodeLocation({address});
+    return {
+      lat: geoLocaion[0].geometry.location.lat(),
+      long: geoLocaion[0].geometry.location.lng()
+    }
+  } catch (err) {
+    throw err;
+  }
+}

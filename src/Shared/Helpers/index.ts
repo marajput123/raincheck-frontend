@@ -1,5 +1,7 @@
 import { EventhubLocalStorage } from "src/Shared/Contants";
-import { IUser } from "./Models/IUser";
+import { URLSearchParams } from "url";
+import { IAllSearchQuery } from "../Models/ISearchParams";
+import { IUser } from "../Models/User/IUser";
 
 export const EmptyString = "";
 
@@ -91,4 +93,31 @@ export const randomImage = () => {
     ]
     const randomIndex = (Math.floor(Math.random() * 12)) % 6
     return imageuris[randomIndex]
+}
+
+export const constructUri = (uri: string, queryParams: IAllSearchQuery) => {
+  let query = ""
+  Object.keys(queryParams).forEach(queryKey => {
+    if (!queryParams[queryKey]) {
+      return;
+    }
+
+    if (query.length > 0) {
+      query += "&"
+    }
+
+    query += `${queryKey}=${queryParams[queryKey]}`;
+  });
+
+  return `${uri}?${query}`;
+}
+
+
+export const constructQueryFromParams = (urlQueryParams: URLSearchParams): IAllSearchQuery => {
+  const query = {};
+  urlQueryParams.forEach((value, key) => {
+    query[key] = value
+  });
+
+  return query;
 }

@@ -11,12 +11,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useAppDispatch, useAppSelector } from 'src/Shared/Redux/Store';
 import { logoutAction } from 'src/Shared/Redux/AuthSlice/Actions';
 import { AvatarGroup } from 'src/Shared/Components/AvatarGroup';
-import { drawerMenuItems, MenuItemKeys } from 'src/Shared/NavigationItems';
+import { drawerMenuItems, MenuItemKeys } from 'src/Shared/Navigation';
 import { IMenuItem, ISwipableMenuItem, MenuItem, SwipableMenuItem } from 'src/Shared/Components/Drawer/MenuItem';
 import { StyledDrawer, StyledSwipeableDrawer } from 'src/Shared/Components/Drawer/Styles';
-
-// TODO: remove after development:
-const imagesrc = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
 
 export const PersistentDrawer = () => {
   const userState = useAppSelector(state => state.userAccount.user)
@@ -24,7 +21,7 @@ export const PersistentDrawer = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
-  const onSelect = (options: Omit<IMenuItem, "onClick">, to?: string) => {
+  const onSelect = (_: Omit<IMenuItem, "onClick">, to?: string) => {
     if (to) {
       navigate(to)
     }
@@ -32,6 +29,10 @@ export const PersistentDrawer = () => {
 
   const onLogoutClick = () => {
     dispatch(logoutAction())
+  };
+
+  const onNavigateToProfile = () => {
+    navigate("/app/profile")
   }
 
   return (
@@ -67,12 +68,13 @@ export const PersistentDrawer = () => {
               </React.Fragment>
             ))}
           </List>
-          <List sx={{ padding: "15px 10px" }}>
+          <List sx={{ padding: "10px" }}>
             <AvatarGroup
-              imageuri={imagesrc}
-              name={`${userState.firstName} ${userState.lastName}`}
-              username={`@${userState.username}`}
+              sx={{ padding: "8px 8px 8px 8px" }}
+              size="small"
+              onClick={onNavigateToProfile}
               userInfoContainerStyles={{ opacity: open ? 1 : 0 }}
+              user={userState}
             />
             <MenuItem
               label={"Logout"}
@@ -95,7 +97,7 @@ export const SwipeableTemporaryDrawer = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
-  const onSelect = (options: Omit<ISwipableMenuItem, "onClick">, to?: string) => {
+  const onSelect = (_: Omit<ISwipableMenuItem, "onClick">, to?: string) => {
     if (to) {
       navigate(to)
     }
@@ -105,7 +107,12 @@ export const SwipeableTemporaryDrawer = () => {
     dispatch(logoutAction())
   }
 
-  const toggle = () => setIsOpen(!open)
+  const toggle = () => setIsOpen(!open);
+
+  const onNavigateToProfile = () => {
+    navigate("/app/profile")
+  }
+
 
   return (
     <>
@@ -141,11 +148,11 @@ export const SwipeableTemporaryDrawer = () => {
               </React.Fragment>
             ))}
           </List>
-          <List sx={{ padding: "15px 10px" }}>
+          <List sx={{ padding: "10px" }}>
             <AvatarGroup
-              imageuri={imagesrc}
-              name={`${userState.firstName} ${userState.lastName}`}
-              username={`@${userState.username}`}
+              sx={{ padding: "8px 8px 8px 8px" }}
+              onClick={onNavigateToProfile}
+              user={userState}
             />
             <SwipableMenuItem
               label={"Logout"}
@@ -159,5 +166,3 @@ export const SwipeableTemporaryDrawer = () => {
     </>
   )
 };
-
-

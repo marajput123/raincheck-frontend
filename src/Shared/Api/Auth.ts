@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { axiosInstance } from "src/Shared/Axios";
 import { IConfirmAccountBody, ISignInRequestBody, ISignInResponse, ISignUpRquestBody } from "src/Shared/Models/IAuth";
 import { IServerResponse } from "src/Shared/Models/IServerResponse";
-import { IUser } from "src/Shared/Models/IUser";
+import { IUser } from "src/Shared/Models/User/IUser";
 
 
 

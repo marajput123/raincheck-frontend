@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react"
-import { Grid, Stack, Container } from "@mui/material";
+import { Grid, Stack, Container, Card } from "@mui/material";
 import { Spinner } from "src/Shared/Components/Spinner";
-import { EventCard } from "src/Shared/Components/Event/EventCard";
+import { cardStyle, EventCard } from "src/Shared/Components/Event/EventCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from '@mui/material/styles';
 import { useQuery } from "react-query";
 import { fetchPublicEvents } from "src/Shared/Api/Event";
 import Typography from "@mui/material/Typography";
-import { IEvent } from "src/Shared/Models/IEvent";
+import { IEvent } from "src/Shared/Models/Event/IEvent";
 import { useQueryMyEvents } from "src/Shared/ReactQuery/Event";
 import { useAppSelector } from "src/Shared/Redux/Store";
 import { StyledLink } from "src/Shared/Components/Link";
 import { useCustomNavigate } from "src/Shared/Hooks/useCustomNavigate";
+import { useCustomSearchParams } from "src/Shared/Hooks/useCustomSearchParams";
+import moment from "moment";
 
 export const ExploreEvents = () => {
   const authState = useAppSelector((state) => state.auth)
@@ -52,6 +54,7 @@ export const ExploreEvents = () => {
   )
 }
 
+
 interface IGridEventList {
   events: IEvent[]
 }
@@ -62,10 +65,9 @@ const GridEventList = (props: IGridEventList) => {
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const onEventCardClick = (_, event:IEvent) => {
+  const onEventCardClick = (_, event: IEvent) => {
     navigate(`/events/${event._id}`)
   }
-
 
   return (
     <Grid spacing={1} container justifyContent={"space-between"}>
@@ -79,7 +81,7 @@ const GridEventList = (props: IGridEventList) => {
         return (
           <React.Fragment key={event._id}>
             <Grid item lg={3} xs={6} xxs={12}  >
-              <EventCard event={event} onCardClick={onEventCardClick}/>
+              <EventCard event={event} onCardClick={onEventCardClick} />
             </Grid>
           </React.Fragment>
         )
@@ -117,7 +119,10 @@ export const NearbyEvents = (props: INearbyEventsProps) => {
         <Typography variant="h4" sx={{ fontWeight: 600 }}>Nearby events</Typography>
         <StyledLink onClick={onSearchNearby}>See more</StyledLink>
       </Stack>
-      <GridEventList events={data.content || []} />
+      {data.content.length !== 0 ?
+        <GridEventList events={data.content || []} /> :
+        <Typography>No Events</Typography>
+      }
     </Stack>
   )
 }
@@ -125,9 +130,10 @@ export const NearbyEvents = (props: INearbyEventsProps) => {
 
 
 const RandomEvents = () => {
-  const { isLoading, data } = useQuery("EventList/FetchNearbyEvents", () => fetchPublicEvents({ limit: 4 }))
+  const { isLoading, data } = useQuery("EventList/SearchPublicEvents", () => fetchPublicEvents({ limit: 4 }));
+  const { constructUri } = useCustomSearchParams()
   const navigate = useCustomNavigate();
-  
+
   if (isLoading) {
     return (
       <Container sx={{ height: "80vh" }}>
@@ -137,7 +143,13 @@ const RandomEvents = () => {
   }
 
   const onSearchRandom = () => {
-    navigate(`/search?_searchLabel=Random`)
+    const uri = constructUri("/search", {
+      _searchLabel:"Random",
+      "startDate[$gte]": moment(new Date).format("YYYY-MM-DD")
+    })
+
+    console.log(uri)
+    navigate(uri)
   }
 
   return (
@@ -146,7 +158,10 @@ const RandomEvents = () => {
         <Typography variant="h4" sx={{ fontWeight: 600 }}>Random events</Typography>
         <StyledLink onClick={onSearchRandom}>See more</StyledLink>
       </Stack>
-      <GridEventList events={data.content || []} />
+      {data.content.length !== 0 ?
+        <GridEventList events={data.content || []} /> :
+        <Typography>No Events</Typography>
+      }
     </Stack>
   )
 }
@@ -165,7 +180,7 @@ const MyEvents = () => {
   }
 
   const toMyEvents = () => {
-    navigate("/app/upcomingEvents")
+    navigate("/app/events")
   }
 
   return (

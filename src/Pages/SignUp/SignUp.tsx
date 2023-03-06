@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch } from 'src/Shared/Redux/Store';
 import { SignUpAction } from 'src/Shared/Redux/AuthSlice/Actions';
 import { signUp } from 'src/Shared/Api/Auth';
-import { EmptyString } from 'src/Shared/HelperMethods';
+import { EmptyString } from 'src/Shared/Helpers';
 
 const rootStackStyle: SxProps = {
     width: "100%"

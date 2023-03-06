@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { axiosInstance } from "src/Shared/Axios";
 import { IServerResponse } from "src/Shared/Models/IServerResponse";
-import { IUser } from "src/Shared/Models/IUser";
+import { IUser } from "src/Shared/Models/User/IUser";
 import { IMembershipCheck } from "src/Shared/Models/IMembership";
 
 export const fetchEventMemberList = async (eventId: string) => {

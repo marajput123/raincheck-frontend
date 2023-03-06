@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import CustomTheme from 'src/Shared/Theme';
@@ -13,8 +13,6 @@ import { useState } from 'react';
 import { VerifyPage } from './Pages/Verify/VerifyPage';
 import { CreateEventForm } from './Pages/Dashboard/CreateEvent';
 import { Dashboard } from './Pages/Dashboard';
-import { UpcomingEvents } from './Pages/Dashboard/UpcomingEvents';
-import { PastEvents } from './Pages/Dashboard/PastEvents';
 import { EventPage } from './Pages/Event';
 import { ExplorePage } from 'src/Pages/Explore';
 import { QueryClientProvider } from 'react-query';
@@ -23,6 +21,10 @@ import { RootLayout } from './Shared/Components/RootLayout';
 import { PublicRoute } from './Shared/Components/Routes/PublicRoute';
 import { ExploreEvents } from './Pages/Explore/ExploreEvents';
 import { SearchEvents } from './Pages/Explore/SearchEvents';
+import { EventView } from './Pages/Dashboard/Events';
+import { ProfilePage } from './Pages/Dashboard/Profile';
+import { EventSettingPage } from './Pages/Dashboard/EventSettings';
+import { NotExistPage } from './Pages/NotExist';
 
 const App = () => {
   const auth = useAppSelector(state => state.auth)
@@ -60,18 +62,24 @@ const App = () => {
                     <Route path="login" element={<Login />}></Route>
                     <Route path="sign-up" element={<SignUp />}></Route>
                     <Route path="verify" element={<VerifyPage />}></Route>
+                    <Route path="*" element={<Navigate to={"/not-exist"} replace={true}/>} />
                   </Route>
                   <Route path="/app" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
                     <Route path="create" element={<CreateEventForm />} />
-                    <Route path="upcomingEvents" element={<UpcomingEvents />} />
-                    <Route path="pastEvents" element={<PastEvents />} />
+                    <Route path="events" element={<EventView />} />
+                    <Route path="profile" element={<ProfilePage />} />
+                    <Route path="events/:eventId/settings" element={<EventSettingPage />} />
+                    <Route path="*" element={<Navigate to={"/not-exist"} replace={true}/>} />
                   </Route>
                   <Route path="/" element={<PublicRoute />}>
                     <Route path="/" element={<ExplorePage />}>
-                      <Route index element={<ExploreEvents />}/>
-                      <Route path="/search" element={<SearchEvents/>}/>
+                      <Route index element={<ExploreEvents />} />
+                      <Route path="/search" element={<SearchEvents />} />
+                      <Route path="*" element={<Navigate to={"/not-exist"} />} />
                     </Route>
-                    <Route path="events/:id" element={<EventPage />}></Route>
+                    <Route path="events/:eventId" element={<EventPage />} />
+                    <Route path="*" element={<Navigate to={"/not-exist"} replace={true}/>} />
+                  <Route path="/not-exist" element={<NotExistPage />} />
                   </Route>
                 </Routes>
               </RootLayout>

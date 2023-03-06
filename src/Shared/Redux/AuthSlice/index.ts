@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import { EmptyString } from "src/Shared/HelperMethods";
+import { EmptyString } from "src/Shared/Helpers";
 import { initialAuthCheckAction, loginAction, logoutAction, SignUpAction } from "./Actions";
 
 interface AuthReducerState {

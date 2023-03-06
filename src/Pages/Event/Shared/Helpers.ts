@@ -1,5 +1,5 @@
 import { APP_NAME } from "src/Shared/Contants";
-import { IEvent } from "src/Shared/Models/IEvent";
+import { IEvent } from "src/Shared/Models/Event/IEvent";
 import { IGuestSession } from "src/Shared/Models/IGuestSession";
 import { RoleType } from "src/Shared/Models/IRole";
 import { IRole } from "src/Shared/Models/IRole";

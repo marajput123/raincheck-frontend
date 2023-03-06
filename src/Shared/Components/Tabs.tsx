@@ -21,11 +21,12 @@ export const StyledTabs = styled(Tabs)({
 
 export interface StyledTabProps {
   label: string;
+  disabletab?: string;
 }
 
 export const StyledTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
-))(({ theme }) => ({
+))(({ theme, disabletab }) => ({
   margin: "5px",
   textTransform: 'none',
   fontWeight: theme.typography.fontWeightRegular,
@@ -35,13 +36,17 @@ export const StyledTab = styled((props: StyledTabProps) => (
   transition: theme.transitions.create(['color', "background-color"], {
     duration: theme.transitions.duration.standard,
   }),
+  pointerEvents: (disabletab || disabletab === "true") ? "none" : "all",
   '&.Mui-selected': {
     color: 'black',
     backgroundColor: "#f3f3f3",
   },
-  "&:hover": {
-    color: 'black',
-  }
+  ...((!disabletab || disabletab === "false") && {
+    "&:hover": {
+      color: 'black',
+    }
+  })
+
 }));
 
 

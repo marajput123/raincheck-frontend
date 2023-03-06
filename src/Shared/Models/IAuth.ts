@@ -1,4 +1,4 @@
-import { IUser } from "src/Shared/Models/IUser";
+import { IUser } from "src/Shared/Models/User/IUser";
 
 export interface ISignInResponse{
   accessToken: string;

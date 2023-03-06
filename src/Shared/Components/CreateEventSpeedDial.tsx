@@ -1,6 +1,7 @@
 import { SpeedDial, SpeedDialAction, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import EditIcon from '@mui/icons-material/Edit';
 import { useCustomNavigate } from "../Hooks/useCustomNavigate";
 
 export const StyledSpeedDialAction = styled(SpeedDialAction)({
@@ -50,7 +51,7 @@ export const CreateEventSpeedDial = (props: ICreateEventSpeedDialProps) => {
       {children}
       <StyledSpeedDialAction
         key={"createevent"}
-        icon={<><Typography>Create quick event</Typography></>}
+        icon={<><Typography>Create event</Typography></>}
         onClick={onCreateEventClick}
       />
     </StyledSpeedDial>

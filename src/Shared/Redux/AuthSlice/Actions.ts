@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import { signIn, signUp, verifyToken, fetchSelf } from "src/Shared/Api/Auth";
-import { clearAuthInStorage, getAccessTokenFromStorage, setAuthInStorage } from "src/Shared/HelperMethods";
+import { clearAuthInStorage, getAccessTokenFromStorage, setAuthInStorage } from "src/Shared/Helpers";
 import { ISignInRequestBody, ISignUpRquestBody } from "src/Shared/Models/IAuth";
 
 interface ISignInParameters {

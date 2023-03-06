@@ -1,6 +1,6 @@
 import { Button, Card, Stack, SxProps } from "@mui/material";
 import { styleCardBoxShadow } from "src/Shared/Contants";
-import { EmptyString } from "src/Shared/HelperMethods";
+import { EmptyString } from "src/Shared/Helpers";
 import { useForm } from "react-hook-form";
 import { FormTextField } from "src/Shared/Components/FormFields/FormTextField";
 import { emailPattern } from "src/Shared/Validation";

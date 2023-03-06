@@ -73,6 +73,7 @@ export const AutocompleteDropdown = (props: IAutocompleteDropdownProps) => {
 
   return (
     <Autocomplete
+      fullWidth
       freeSolo
       loading={autocompleteOptionsLoading}
       options={autocompleteOptions}
@@ -92,9 +93,12 @@ export const AutocompleteDropdown = (props: IAutocompleteDropdownProps) => {
           )
       )}
       renderInput={(params) => (
-        props.renderInput ? props.renderInput(params) :
+        props.renderInput ?
+          props.renderInput(params) :
           <TextField
             {...params}
+            InputProps={{...params.InputProps, endAdornment: <></>}}
+            inputProps={{...params.inputProps, value: address}}
             onChange={(e) => onInputChange(e.target.value)}
             label="Address"
             variant="outlined"

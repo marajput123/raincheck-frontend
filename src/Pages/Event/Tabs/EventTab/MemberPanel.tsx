@@ -1,11 +1,11 @@
-import { Card, List, ListItem, Skeleton, Stack, SxProps, Typography } from "@mui/material";
-import React, { useMemo } from "react"
+import { Box, Card, List, ListItem, Skeleton, Stack, SxProps, Typography } from "@mui/material";
+import React from "react"
 import { useParams } from "react-router-dom";
 import { AvatarGroup } from "src/Shared/Components/AvatarGroup";
-import { randomImage } from "src/Shared/HelperMethods";
 import { useAppSelector } from "src/Shared/Redux/Store";
 import { useQueryGetMembers, useQueryMembershipCheck } from "../../Shared/EventQuery";
 import { panelStyle } from "../../Shared/Styles";
+import securitySVG from "src/Shared/Svg/security.svg";
 
 const memberPanelStyle: SxProps = {
   ...panelStyle,
@@ -14,13 +14,11 @@ const memberPanelStyle: SxProps = {
 
 
 export const MemberPanel = () => {
-  const eventId = useParams().id!;
+  const eventId = useParams().eventId!;
   const authState = useAppSelector(state => state.auth);
 
   const membershipQuery = useQueryMembershipCheck(eventId, authState.userId, authState.isAuthenticated);
   const membersQuery = useQueryGetMembers(eventId, authState.isAuthenticated);
-
-  const imageUri = useMemo(() => randomImage(), []);
 
   if (membershipQuery.isLoading || membershipQuery.isLoading) {
     return <Skeleton variant="rounded" width={"100%"} height={"100%"} />
@@ -28,26 +26,32 @@ export const MemberPanel = () => {
 
   return (
     <Card sx={memberPanelStyle}>
-      <Stack sx={{ padding: "15px" }} spacing={1}>
-        <Typography variant="h6">Who's going</Typography>
+      <Stack sx={{ height: "100%" }} spacing={0}>
+        <Box sx={{ padding: "20px" }}>
+          <Typography variant="h6">Who's going</Typography>
+        </Box>
         {authState.isAuthenticated ?
           <>
-            <List sx={{ height: "500px", overflowY: "auto" }}>
+            <List sx={{ flex: 1, overflowY: "auto", padding: "5px" }}>
               {membersQuery.data?.content.map((member, index) => (
                 <React.Fragment key={member.username + index}>
-                  <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItem sx={{ padding: "5px 0px" }}>
                     <AvatarGroup
-                      imageuri={imageUri}
-                      name={`${member.firstName} ${member.lastName}`}
-                      username={`@${member.username}`}
+                      sx={{ width: "100%", padding: "5px" }}
+                      user={member}
                     />
                   </ListItem>
                 </React.Fragment>
               ))}
             </List>
-          </> :
-          <Typography>Please sign up to see</Typography>
+          </>
+          :
+          <Stack alignItems={"center"}>
+            <img src={securitySVG} />
+            <Typography>Please sign up to see</Typography>
+          </Stack>
         }
+
       </Stack>
     </Card>
   )

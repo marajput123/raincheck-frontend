@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { IEvent } from "src/Shared/Models/IEvent";
+import { IEvent } from "src/Shared/Models/Event/IEvent";
 import { axiosInstance } from "src/Shared/Axios";
 import { IQuery, IServerResponse } from "src/Shared/Models/IServerResponse";
 

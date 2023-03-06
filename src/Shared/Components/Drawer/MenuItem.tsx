@@ -2,7 +2,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { MenuItemKeys } from 'src/Shared/NavigationItems';
+import { MenuItemKeys } from 'src/Shared/Navigation';
 import { useLocation } from 'react-router-dom';
 
 export interface IMenuItem {

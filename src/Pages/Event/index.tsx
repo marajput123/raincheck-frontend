@@ -5,22 +5,23 @@ import { EventTab } from "./Tabs/EventTab";
 
 
 export const EventPage = () => {
-    const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
 
-    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-        setTabIndex(newValue);
-    };
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue);
+  };
 
-    return (
-        <>
-            <Container>
-                <StyledTabs value={tabIndex} onChange={handleTabChange}>
-                    <StyledTab label={"Event"} />
-                    <StyledTab label={"Messages"} />
-                    <StyledTab label={"Album"} />
-                </StyledTabs>
-                <EventTab/>
-            </Container>
-        </>
-    )
+  return (
+    <>
+      <Container sx={{ paddingTop: "10px", paddingBottom: "10px" }}>
+        <StyledTabs value={tabIndex} onChange={handleTabChange}>
+          <StyledTab label={"Event"} />
+          {/* TODO: Figure out a way to pass boolean props. Like AvatarGroup.tsx */}
+          <StyledTab disabletab={"true"} label={"Coming soon"} />
+          <StyledTab disabletab={"true"} label={"Coming soon"} />
+        </StyledTabs>
+        <EventTab />
+      </Container>
+    </>
+  )
 }

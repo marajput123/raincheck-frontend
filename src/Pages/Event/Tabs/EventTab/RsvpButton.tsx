@@ -3,8 +3,8 @@ import {  useState, useEffect } from "react"
 import { useSearchParams } from "react-router-dom";
 import { postGuestRSVP, postRSVP, postUnrsvp } from "src/Shared/Api/Rsvp";
 import { BasicModal } from "src/Shared/Components/BasicModal";
-import { EmptyString } from "src/Shared/HelperMethods";
-import { IEvent } from "src/Shared/Models/IEvent";
+import { EmptyString } from "src/Shared/Helpers";
+import { IEvent } from "src/Shared/Models/Event/IEvent";
 import { IRsvpRequestBody } from "src/Shared/Models/IMembership";
 import { RoleType } from "src/Shared/Models/IRole";
 import { queryClient } from "src/Shared/ReactQuery";
