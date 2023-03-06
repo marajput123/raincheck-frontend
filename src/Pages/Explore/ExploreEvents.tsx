@@ -131,7 +131,7 @@ export const NearbyEvents = (props: INearbyEventsProps) => {
         <StyledLink onClick={onSearchNearby}>See more</StyledLink>
       </Stack>
       {
-        data?.content.length !== 0 ?
+        data?.content?.length !== 0 ?
           <GridEventList events={data?.content || []} /> :
           <Typography>No Events</Typography>
       }
@@ -178,7 +178,7 @@ const RandomEvents = () => {
         <StyledLink onClick={onSearchRandom}>See more</StyledLink>
       </Stack>
       {
-        data?.content.length !== 0 ?
+        data?.content?.length !== 0 ?
           <GridEventList events={data?.content || []} /> :
           <Typography>No Events</Typography>
 
@@ -218,7 +218,7 @@ const MyEvents = () => {
         <StyledLink onClick={toMyEvents}>See more</StyledLink>
       </Stack>
       {
-        data?.content.length !== 0 ?
+        data?.content?.length !== 0 ?
           <GridEventList events={data?.content || []} /> :
           <Typography>No Events</Typography>
 
