@@ -62,6 +62,9 @@ export const AutocompleteDropdown = (props: IAutocompleteDropdownProps) => {
     if (props.onClickDropdownOption ) {
       props.onClickDropdownOption(_props, event, option)
     }
+    if (props.inputValue === undefined) {
+      setAddress(option.address);
+    }
   }
 
   const onInputChange = (value: string) => {
