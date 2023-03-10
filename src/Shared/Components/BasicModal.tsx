@@ -1,10 +1,27 @@
 import { useState, useEffect } from "react"
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { SxProps } from "@mui/material/styles";
+import { Card, IconButton } from "@mui/material";
+import { styleCardBoxShadow } from "../Contants";
+import CloseIcon from '@mui/icons-material/Close';
 
+const style: SxProps = {
+  position: "relative",
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 280,
+  bgcolor: 'background.paper',
+  boxShadow: styleCardBoxShadow,
+  padding: "50px 20px 20px 20px",
+  borderRadius: "15px",
+};
 
+const closeButtonStyle: SxProps = {
+  position: "absolute",
+  top: 5,
+  right: 5
+}
 
 interface IBasicModalProps {
   open: boolean;
@@ -36,14 +53,16 @@ export const BasicModal = (props: IBasicModalProps) => {
         open={isOpen}
         onClose={handleClose}
         closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
       >
-        <>
+        <Card sx={style}>
+          <IconButton
+            onClick={handleClose}
+            sx={closeButtonStyle}
+          >
+            <CloseIcon />
+          </IconButton>
           {content}
-        </>
+        </Card>
       </Modal>
     </>
   )

@@ -102,7 +102,7 @@ export const FilterPanel = (props: IFitlerPanelProps) => {
   }
 
   return (
-    <Stack spacing={2} sx={{ marginTop: isMobile ? null : "5rem", width: "100%", maxWidth: "250px", paddingRight: "20px", borderRight: "1px solid #c4c4c4" }}>
+    <Stack spacing={2} sx={{ marginTop: isMobile ? null : "5rem", width: "100%", maxWidth: "250px", maxHeight: "80vh", paddingRight: "20px", borderRight: "1px solid #c4c4c4" }}>
       <Typography variant="h6">Filters</Typography>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <MobileDatePicker

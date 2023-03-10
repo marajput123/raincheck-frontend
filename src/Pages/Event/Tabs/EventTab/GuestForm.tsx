@@ -14,7 +14,7 @@ const style: SxProps = {
   bgcolor: 'background.paper',
   boxShadow: styleCardBoxShadow,
   padding: "40px 25px",
-  borderRadius: "30px"
+  borderRadius: "15px"
 };
 
 export interface IGuestRsvpForm {
@@ -43,37 +43,35 @@ export const GuestRsvpForm = (props: IGuestRsvpFormProps) => {
   }
 
   return (
-    <Card sx={style}>
-      <Stack spacing={3}>
-        <FormTextField
-          controllerProps={{
-            control,
-            rules: {
-              required: "Email is required",
-              pattern: {value: emailPattern, message: "Must be a valid email"}
-            },
-            name: "email"
-          }}
-          label="Email"
-        />
-        <FormTextField
-          controllerProps={{
-            control,
-            rules: { required: "First name is required" },
-            name: "firstName"
-          }}
-          label="First name"
-        />
-        <FormTextField
-          controllerProps={{
-            control,
-            rules: { required: "Last name is required" },
-            name: "lastName"
-          }}
-          label="Last name"
-        />
-        <Button variant="contained" onClick={handleSubmit(onSubmit)}>RSVP</Button>
-      </Stack>
-    </Card>
+    <Stack spacing={3}>
+      <FormTextField
+        controllerProps={{
+          control,
+          rules: {
+            required: "Email is required",
+            pattern: { value: emailPattern, message: "Must be a valid email" }
+          },
+          name: "email"
+        }}
+        label="Email"
+      />
+      <FormTextField
+        controllerProps={{
+          control,
+          rules: { required: "First name is required" },
+          name: "firstName"
+        }}
+        label="First name"
+      />
+      <FormTextField
+        controllerProps={{
+          control,
+          rules: { required: "Last name is required" },
+          name: "lastName"
+        }}
+        label="Last name"
+      />
+      <Button variant="contained" onClick={handleSubmit(onSubmit)}>RSVP</Button>
+    </Stack>
   )
 };

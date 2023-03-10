@@ -47,8 +47,8 @@ export const MemberPanel = () => {
           </>
           :
           <Stack alignItems={"center"}>
-            <img src={securitySVG} />
-            <Typography>Please sign up to see</Typography>
+            <img src={securitySVG} style={{height: "100%", maxHeight: "500px"}} />
+            <Typography>Please login or sign up to see is going.</Typography>
           </Stack>
         }
 

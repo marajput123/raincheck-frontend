@@ -3,7 +3,7 @@ import moment from "moment";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CircleIcon from '@mui/icons-material/Circle';
 import { faker } from "@faker-js/faker";
-import { Typography, Stack, Card, Box, SxProps, CardMedia, CardContent } from "@mui/material";
+import { Typography, Stack, Card, Box, SxProps, CardMedia, CardContent, Skeleton } from "@mui/material";
 import { IEvent } from "src/Shared/Models/Event/IEvent"
 import { AttendeeChip, OrganizerChip } from "src/Shared/Components/Chips";
 import { styleCardBoxShadow } from "src/Shared/Contants";
@@ -61,6 +61,7 @@ const roleTypeChipContainerStyle: SxProps = {
 
 export interface IEventCardProps {
   event: IEvent
+  isLoading?: boolean;
   onCardClick?: (e: React.SyntheticEvent, event: IEvent) => void;
 }
 
@@ -125,6 +126,17 @@ export const WideEventCard = (props: IEventCardProps) => {
         </Stack>
       </Stack>
     </Card>
+  )
+}
+
+export const EventCardSkeleton = () => {
+  return (
+    <Box sx={{ maxWidth: "100%", minWidth: "10rem", height: "335px" }}>
+      <Skeleton variant="rectangular" height={"50%"} />
+      <Skeleton variant="text" height={"20%"} />
+      <Skeleton />
+      <Skeleton width={"50%"} />
+    </Box>
   )
 }
 

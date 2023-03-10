@@ -20,7 +20,7 @@ export const EventTab = () => {
 
   return (
     <>
-      <Grid container spacing={4} sx={{ marginTop: "15px" }}>
+      <Grid container spacing={4}>
         <Grid item xxs={12} lg={8}>
           <EventPanel containerRef={containerRef} />
         </Grid>

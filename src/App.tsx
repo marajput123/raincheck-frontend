@@ -24,7 +24,7 @@ import { SearchEvents } from './Pages/Explore/SearchEvents';
 import { EventView } from './Pages/Dashboard/Events';
 import { ProfilePage } from './Pages/Dashboard/Profile';
 import { EventSettingPage } from './Pages/Dashboard/EventSettings';
-import { NotExistPage } from './Pages/NotExist';
+import { PageNotFoundPage } from './Pages/PageNotFound';
 
 const App = () => {
   const auth = useAppSelector(state => state.auth)
@@ -79,7 +79,7 @@ const App = () => {
                     </Route>
                     <Route path="events/:eventId" element={<EventPage />} />
                     <Route path="*" element={<Navigate to={"/not-exist"} replace={true}/>} />
-                  <Route path="/not-exist" element={<NotExistPage />} />
+                  <Route path="/not-exist" element={<PageNotFoundPage />} />
                   </Route>
                 </Routes>
               </RootLayout>

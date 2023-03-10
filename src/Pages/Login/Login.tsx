@@ -123,7 +123,7 @@ const Login = () => {
                         style={{ cursor: 'pointer' }}
                         component="span"
                         fontWeight='fontWeightMedium'
-                        onClick={() => onNavigate('/sign-up')}
+                        onClick={() => onNavigate('/auth/sign-up')}
                     >
                         {" "}Click here
                     </Box>
