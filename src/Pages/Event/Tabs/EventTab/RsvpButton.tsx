@@ -43,7 +43,7 @@ export const RsvpButton = (props: IRsvpButton) => {
       setMemberId(EmptyString);
     }
 
-    if (searchParams.get("memberId")) {
+    if (searchParams.get("m")) {
       setMemberId(searchParams.get("m"));
     }
     setIsLoading(false);

@@ -63,7 +63,6 @@ export const EventPanel = (props: IEventPanelProps) => {
 
   const event = eventQuery.data;
 
-
   return (
     <Card
       sx={{ ...eventPanelStyle, height: isCardOpen ? "auto" : "650px", position: "relative" }}
@@ -81,7 +80,6 @@ export const EventPanel = (props: IEventPanelProps) => {
           </Typography>
         </Box>
       </Box>
-
       <Stack sx={{ padding: "25px" }} spacing={6}>
         <Stack direction="row">
           <Stack sx={{ flex: 7 }} spacing={1}>
